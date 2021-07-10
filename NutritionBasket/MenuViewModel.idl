@@ -1,0 +1,11 @@
+//MenuViewModel.idl
+import "MenuItem.idl";
+
+namespace NutritionBasket
+{
+    runtimeclass MenuViewModel
+    {
+        MenuViewModel();
+        Windows.Foundation.Collections.IObservableVector<MenuItem> Options{ get; };
+    }
+}

@@ -1,0 +1,14 @@
+//MainPage.idl
+import "BodyViewModel.idl";
+import "MenuViewModel.idl";
+
+namespace NutritionBasket
+{
+    [bindable]
+    runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
+    {
+        MainPage();
+BodyViewModel BodyViewModel{ get; };
+        MenuViewModel MenuViewModel{ get; };
+    }
+}

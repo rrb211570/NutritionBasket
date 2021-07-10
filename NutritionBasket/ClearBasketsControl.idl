@@ -1,0 +1,8 @@
+namespace NutritionBasket
+{
+    runtimeclass ClearBasketsControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        ClearBasketsControl();
+        Int32 MyProperty;
+    }
+}

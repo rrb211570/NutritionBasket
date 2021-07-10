@@ -1,0 +1,13 @@
+// NutriControl.idl
+import "BasketItem.idl";
+
+namespace NutritionBasket
+{
+    [default_interface]
+    runtimeclass NutriControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        NutriControl();
+        static Windows.UI.Xaml.DependencyProperty BasketItemProperty{ get; };
+        BasketItem BasketItem;
+    }
+}

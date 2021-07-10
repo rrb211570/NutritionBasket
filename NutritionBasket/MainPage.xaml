@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="NutritionBasket.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutritionBasket"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control = "using:NutritionBasket"
+    mc:Ignorable="d">
+    <RelativePanel>
+        <StackPanel x:Name="Menu" Orientation="Horizontal" Width="Auto" HorizontalAlignment="Left">
+            <ListBox ItemsSource="{x:Bind MenuViewModel.Options}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:MenuItem">
+                        <Button Click="MenuClickHandler" Content="{x:Bind Name, Mode=OneWay}"></Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel x:Name="ColControls" Orientation="Horizontal" HorizontalAlignment="Right" RelativePanel.Below="Menu">
+            <control:ClearBasketsControl/><!-- ========== control ========== -->
+            <control:NewBasketControl/><!-- ========== control ========== -->
+        </StackPanel>
+
+        <RelativePanel x:Name="Body" HorizontalAlignment="Center" RelativePanel.Below="ColControls" MaxHeight="300">
+            <ListBox x:Name="BodyList" ItemsSource="{x:Bind BodyViewModel.BasketViews}" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:BasketViewModel">
+                        <StackPanel GotFocus="BasketGotFocus">
+                            <StackPanel x:Name="AddDelCol" Orientation="Vertical">
+                                <TextBlock x:Name="BasketName" Text="{x:Bind Name, Mode=OneWay}"></TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <control:AddItemControl/><!-- ========== control ========== -->
+                                    <control:DeleteBasketControl/><!-- ========== control ========== -->
+                                </StackPanel>
+                            </StackPanel>
+                            <ListBox x:Name="ItemList" ItemsSource="{x:Bind Basket}" RelativePanel.Below="AddDelCol">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:BasketItem">
+                                        <StackPanel GotFocus="ItemGotFocus" Orientation="Horizontal">
+                                            <Button Content="Delete" Click="DeleteItemClickHandler"/>
+                                            <TextBlock VerticalAlignment="Center" Text="{x:Bind Name, Mode=OneWay}"/>
+                                            <local:NutriControl BasketItem="{x:Bind}"/> <!-- ========== control ========== -->
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+        </RelativePanel>
+
+        <StackPanel x:Name="Functions" Orientation="Horizontal" HorizontalAlignment="Right" RelativePanel.Below="Body">
+            <Button Click="AvgOptClickHandler">Avg per 1 day (click for options)</Button>
+            <Button Click="AvgClickHandler">Go</Button>
+        </StackPanel>
+    </RelativePanel>
+</Page>

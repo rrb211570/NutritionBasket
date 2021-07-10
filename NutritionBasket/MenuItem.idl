@@ -1,0 +1,9 @@
+//MenuItem.idl
+namespace NutritionBasket
+{
+    runtimeclass MenuItem : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        MenuItem(String name);
+        String Name;
+    }
+}

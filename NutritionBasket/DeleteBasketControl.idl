@@ -1,0 +1,8 @@
+namespace NutritionBasket
+{
+    runtimeclass DeleteBasketControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        DeleteBasketControl();
+        Int32 MyProperty;
+    }
+}

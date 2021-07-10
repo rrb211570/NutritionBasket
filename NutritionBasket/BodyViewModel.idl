@@ -1,0 +1,11 @@
+//BodyViewModel.idl
+import "BasketViewModel.idl";
+
+namespace NutritionBasket
+{
+    runtimeclass BodyViewModel 
+    {
+        BodyViewModel();
+Windows.Foundation.Collections.IObservableVector<BasketViewModel> BasketViews{ get; };
+    }
+}

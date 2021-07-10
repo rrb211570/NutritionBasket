@@ -1,0 +1,8 @@
+namespace NutritionBasket
+{
+    runtimeclass NewBasketControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        NewBasketControl();
+        Int32 MyProperty;
+    }
+}

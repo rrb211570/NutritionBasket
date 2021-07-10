@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="App.idl" />
+    <Midl Include="MainPage.idl" />
+    <Midl Include="BasketItem.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BasketItemNutri.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BasketItemNutriElem.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BasketViewModel.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BodyViewModel.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="MenuItem.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="MenuViewModel.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="MainPage.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{e48dc53e-40b1-40cb-970a-f89935452892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{c77967f3-156f-466d-8c20-8c30ce55cc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{d71ecdd6-4515-413b-845f-8297623baff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="My Custom Controls">
+      <UniqueIdentifier>{38c0f4a4-6af7-441d-b935-92e58c58e360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View Models">
+      <UniqueIdentifier>{a9279170-6836-481f-930d-23ea70556a55}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PropertySheet.props" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml" />
+    <Page Include="DeleteBasketControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="AddItemControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="NewBasketControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="ClearBasketsControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="NutriControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+  </ItemGroup>
+</Project>

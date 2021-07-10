@@ -1,0 +1,13 @@
+//BasketViewModel.idl
+import "BasketItem.idl";
+
+namespace NutritionBasket
+{
+	runtimeclass BasketViewModel
+	{
+		BasketViewModel();
+		Windows.Foundation.Collections.IObservableVector<BasketItem> Basket{ get; };
+		UInt8 BasketIndex;
+		String Name;
+	}
+}
