@@ -98,6 +98,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Rakesh\Documents\Libraries_for_VS\cpp-httplib-0.9.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -118,16 +119,20 @@
       <DependentUpon>BasketItem.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="BasketItemNutri.h">
-      <DependentUpon>BasketItemNutri.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="BasketItemNutriElem.h">
       <DependentUpon>BasketItemNutriElem.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="BasketViewModel.h">
       <DependentUpon>BasketViewModel.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="BluePrint.h">
+      <DependentUpon>BluePrint.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="BluePrintList.h">
+      <DependentUpon>BluePrintList.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="BodyViewModel.h">
@@ -214,16 +219,20 @@
       <DependentUpon>BasketItem.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="BasketItemNutri.cpp">
-      <DependentUpon>BasketItemNutri.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="BasketItemNutriElem.cpp">
       <DependentUpon>BasketItemNutriElem.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="BasketViewModel.cpp">
       <DependentUpon>BasketViewModel.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="BluePrint.cpp">
+      <DependentUpon>BluePrint.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="BluePrintList.cpp">
+      <DependentUpon>BluePrintList.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="BodyViewModel.cpp">
@@ -278,13 +287,16 @@
     <Midl Include="BasketItem.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="BasketItemNutri.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="BasketItemNutriElem.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="BasketViewModel.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="BluePrint.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="BluePrintList.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="BodyViewModel.idl">

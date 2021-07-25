@@ -1,0 +1,11 @@
+// BluePrintList.idl
+import "BluePrint.idl";
+
+namespace NutritionBasket
+{
+    runtimeclass BluePrintList 
+    {
+        BluePrintList();
+        Windows.Foundation.Collections.IObservableVector<BluePrint> BluePrints{ get; };
+    }
+}

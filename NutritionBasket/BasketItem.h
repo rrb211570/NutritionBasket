@@ -1,17 +1,20 @@
 ﻿#pragma once
 
 #include "BasketItem.g.h"
-#include "BasketItemNutri.h"
+#include "BasketItemNutriElem.h"
 
 namespace winrt::NutritionBasket::implementation
 {
     struct BasketItem : BasketItemT<BasketItem>
     {
         BasketItem() = delete;
-        BasketItem(winrt::hstring name);
+        BasketItem(winrt::hstring name, winrt::hstring amount);
 
         winrt::hstring Name();
-        NutritionBasket::BasketItemNutri Nutrition();
+        winrt::hstring Amount();
+        Windows::Foundation::Collections::IObservableVector<NutritionBasket::BasketItemNutriElem> Elems();
+        void BasketItem::AddElem(winrt::hstring name, winrt::hstring quantity);
+        void BasketItem::Amount(winrt::hstring const& value);
         uint8_t ItemIndex();
         uint8_t BasketIndex();
 
@@ -24,9 +27,10 @@ namespace winrt::NutritionBasket::implementation
 
     private:
         winrt::hstring m_name;
+        winrt::hstring m_amt;
+        Windows::Foundation::Collections::IObservableVector<NutritionBasket::BasketItemNutriElem> m_elems;
         uint8_t m_itemIndex;
         uint8_t m_basketIndex;
-        NutritionBasket::BasketItemNutri m_basketItemNutri;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
     };
 }

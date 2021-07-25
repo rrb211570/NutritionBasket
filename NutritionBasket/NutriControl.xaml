@@ -20,8 +20,8 @@
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
                     <StackPanel x:Name="pan">
-                        <TextBlock Text="{x:Bind BasketItem.Nutrition.Amount, Mode=OneWay}"></TextBlock>
-                        <ListBox ItemsSource="{x:Bind BasketItem.Nutrition.Elems}">
+                        <TextBlock Text="{x:Bind BasketItem.Amount, Mode=OneWay}"></TextBlock>
+                        <ListBox ItemsSource="{x:Bind BasketItem.Elems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="local:BasketItemNutriElem">
                                     <StackPanel Orientation="Horizontal">

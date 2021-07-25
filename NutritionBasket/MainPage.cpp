@@ -20,24 +20,20 @@ namespace winrt::NutritionBasket::implementation
 		SecondView.Name(L"Day 2");
 		m_bodyViewModel.BasketViews().Append(SecondView);
 
-		NutritionBasket::BasketItem MainItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Main Instantiation");
+		NutritionBasket::BasketItem MainItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Main Instantiation", L"30g");
 		MainItem.ItemIndex(0);
 		MainItem.BasketIndex(0);
-		NutritionBasket::BasketItemNutri ItemNutri = MainItem.Nutrition();
-		ItemNutri.Amount(L"30g");
-		ItemNutri.AddElem(L"Fat", L"1g");
-		ItemNutri.AddElem(L"Sugar", L"200g");
-		ItemNutri.AddElem(L"Carb", L"47850g");
+		MainItem.AddElem(L"Fat", L"1g");
+		MainItem.AddElem(L"Sugar", L"200g");
+		MainItem.AddElem(L"Carb", L"47850g");
 		MainView.Basket().Append(MainItem);
 
-		NutritionBasket::BasketItem SecondItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Second Instantiation");
+		NutritionBasket::BasketItem SecondItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Second Instantiation", L"30g");
 		SecondItem.ItemIndex(0);
 		SecondItem.BasketIndex(1);
-		NutritionBasket::BasketItemNutri ItemNutri2 = SecondItem.Nutrition();
-		ItemNutri2.Amount(L"30g");
-		ItemNutri2.AddElem(L"Fat", L"1g");
-		ItemNutri2.AddElem(L"Sugar", L"200g");
-		ItemNutri2.AddElem(L"Carb", L"47850g");
+		SecondItem.AddElem(L"Fat", L"1g");
+		SecondItem.AddElem(L"Sugar", L"200g");
+		SecondItem.AddElem(L"Carb", L"47850g");
 		SecondView.Basket().Append(SecondItem);
 	}
 

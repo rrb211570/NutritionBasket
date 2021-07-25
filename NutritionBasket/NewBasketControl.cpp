@@ -41,4 +41,9 @@ namespace winrt::NutritionBasket::implementation
 		BasketTitle().Text(L"");
 		main->ClosePopUps();
 	}
+
+	void NewBasketControl::NewColCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
+	{
+		BasketTitle().Text(L"");
+	}
 }

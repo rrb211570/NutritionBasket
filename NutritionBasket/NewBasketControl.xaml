@@ -8,8 +8,8 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="NewCol" Click="ClickHandler">Add</Button>
-        <ContentDialog x:Name="MyDialog" PrimaryButtonText="OK" PrimaryButtonClick="NewColClickHandler" CloseButtonText="Cancel">
+        <Button x:Name="NewCol" Click="ClickHandler">New</Button>
+        <ContentDialog x:Name="MyDialog" PrimaryButtonText="OK" PrimaryButtonClick="NewColClickHandler" CloseButtonText="Cancel" CloseButtonClick="NewColCancelClickHandler">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock>Name:</TextBlock>

@@ -1,0 +1,14 @@
+// BluePrint.idl
+import "BasketItemNutriElem.idl";
+
+namespace NutritionBasket
+{
+	runtimeclass BluePrint
+	{
+		BluePrint();
+    String Name;
+	String Amount;
+	void AddElem(String name, String quantity);
+	Windows.Foundation.Collections.IObservableVector<BasketItemNutriElem> Elems{ get; };
+	}
+}

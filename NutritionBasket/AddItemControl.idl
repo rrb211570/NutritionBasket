@@ -1,8 +1,14 @@
+// AddItemControl.idl
+import "BluePrintList.idl";
+import "BluePrint.idl";
+
 namespace NutritionBasket
 {
     runtimeclass AddItemControl : Windows.UI.Xaml.Controls.UserControl
     {
         AddItemControl();
-        Int32 MyProperty;
+        BluePrintList LocalSearchList{ get; };
+        BluePrint SelectedItem{ get; };
+        // BluePrintList USDASearchList{ get; };
     }
 }

@@ -1,13 +1,15 @@
 // BasketItem.idl
-import "BasketItemNutri.idl";
+import "BasketItemNutriElem.idl";
 
 namespace NutritionBasket
 {
     runtimeclass BasketItem : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
-        BasketItem(String name);
+        BasketItem(String name, String amount);
         String Name;
-        BasketItemNutri Nutrition{ get; };
+        String Amount;
+        void AddElem(String name, String quantity);
+        Windows.Foundation.Collections.IObservableVector<BasketItemNutriElem> Elems{ get; };
         UInt8 ItemIndex;
         UInt8 BasketIndex;
     }

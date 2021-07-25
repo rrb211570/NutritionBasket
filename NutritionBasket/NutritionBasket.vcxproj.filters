@@ -9,9 +9,6 @@
     <Midl Include="BasketItem.idl">
       <Filter>View Models</Filter>
     </Midl>
-    <Midl Include="BasketItemNutri.idl">
-      <Filter>View Models</Filter>
-    </Midl>
     <Midl Include="BasketItemNutriElem.idl">
       <Filter>View Models</Filter>
     </Midl>
@@ -25,6 +22,12 @@
       <Filter>View Models</Filter>
     </Midl>
     <Midl Include="MenuViewModel.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BluePrint.idl">
+      <Filter>View Models</Filter>
+    </Midl>
+    <Midl Include="BluePrintList.idl">
       <Filter>View Models</Filter>
     </Midl>
   </ItemGroup>
