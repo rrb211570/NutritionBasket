@@ -13,21 +13,6 @@ namespace winrt::NutritionBasket::implementation
 	AddItemControl::AddItemControl()
 	{
 		InitializeComponent();
-
-		NutritionBasket::BluePrint PreLoadedBluePrint = winrt::make<NutritionBasket::implementation::BluePrint>();
-		PreLoadedBluePrint.Name(L"My BluePrint");
-		PreLoadedBluePrint.Amount(L"30g");
-		PreLoadedBluePrint.AddElem(L"Fat", L"1g");
-		PreLoadedBluePrint.AddElem(L"Sugar", L"200g");
-		PreLoadedBluePrint.AddElem(L"Carb", L"47850g");
-		NutritionBasket::BluePrint PreLoadedBluePrint2 = winrt::make<NutritionBasket::implementation::BluePrint>();
-		PreLoadedBluePrint2.Name(L"My Second BluePrint");
-		PreLoadedBluePrint2.Amount(L"333g");
-		PreLoadedBluePrint2.AddElem(L"Fat", L"3g");
-		PreLoadedBluePrint2.AddElem(L"Sugar", L"333g");
-		PreLoadedBluePrint2.AddElem(L"Carb", L"3333333g");
-		m_localSearchList.BluePrints().Append(PreLoadedBluePrint);
-		m_localSearchList.BluePrints().Append(PreLoadedBluePrint2);
 	}
 
 	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()
@@ -42,8 +27,26 @@ namespace winrt::NutritionBasket::implementation
 
 	void AddItemControl::SearchBarEntryHandler(IInspectable const& sender, Input::KeyRoutedEventArgs const& e)
 	{
+		winrt::hstring entryName = SearchBar().Text();
+		if (entryName.size() == 0) return; // if user typed enter or bksp on empty searchBox
 		// Update LocalSearchList
 		SearchResults().Visibility(Visibility::Visible);
+		m_selectedItem = NULL;
+		m_localSearchList.BluePrints().Clear();
+		// triggers strstr() on each BluePrint : BluePrintList, to populate LocalSearchList()
+		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
+		for (int i = 0; i < main->LocalBluePrints().BluePrints().Size(); ++i) {
+			winrt::hstring bluePrintName = main->LocalBluePrints().BluePrints().GetAt(i).Name();
+			char lowerBluePrintName[50];
+			char lowerEntryName[50];
+			strcpy_s(lowerBluePrintName, 50, winrt::to_string(bluePrintName).c_str());
+			strcpy_s(lowerEntryName, 50, winrt::to_string(entryName).c_str());
+			main->LowerCase(lowerBluePrintName);
+			main->LowerCase(lowerEntryName);
+			if (strstr(lowerBluePrintName, lowerEntryName) != NULL) {
+				m_localSearchList.BluePrints().Append(main->LocalBluePrints().BluePrints().GetAt(i));
+			}
+		}
 	}
 
 	void AddItemControl::ClearSearchBarHandler(IInspectable const& sender, RoutedEventArgs const& e)
@@ -83,7 +86,7 @@ namespace winrt::NutritionBasket::implementation
 		int index = main->BodyList().SelectedIndex();
 		// attach name input
 		if (SelectedItem() == NULL) {
-			NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(SearchBar().Text(), L"150g");
+			NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Invalid", L"150g");
 			ClickItem.BasketIndex(index);
 			ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
 			// attach nutri input

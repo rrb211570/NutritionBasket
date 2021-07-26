@@ -14,6 +14,7 @@ namespace winrt::NutritionBasket::implementation
         MainPage();
         NutritionBasket::BodyViewModel BodyViewModel();
         NutritionBasket::MenuViewModel MenuViewModel();
+        NutritionBasket::BluePrintList LocalBluePrints();
 
         void MenuClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
         void DeleteItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
@@ -26,9 +27,12 @@ namespace winrt::NutritionBasket::implementation
         winrt::Windows::UI::Xaml::Controls::TextBox FindNameInput(DependencyObject panel);
         void ClosePopUps();
 
+        void LowerCase(char * arr);
+
     private:
         NutritionBasket::MenuViewModel m_menuViewModel;
         NutritionBasket::BodyViewModel m_bodyViewModel;
+        NutritionBasket::BluePrintList m_localBluePrints;
     };
 }
 

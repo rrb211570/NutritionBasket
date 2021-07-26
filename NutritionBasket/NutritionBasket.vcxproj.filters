@@ -98,6 +98,42 @@
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX86)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
+    <None Include="@(IcuLibsX64)" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

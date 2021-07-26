@@ -2,6 +2,7 @@
 #include "MainPage.h"
 #include "MainPage.g.cpp"
 #include <winrt/Microsoft.UI.Xaml.Media.h>
+#include "icu.h"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
@@ -10,6 +11,7 @@ namespace winrt::NutritionBasket::implementation
 {
 	MainPage::MainPage()
 	{
+		
 		InitializeComponent();
 		NutritionBasket::BasketViewModel MainView = winrt::make<NutritionBasket::implementation::BasketViewModel>();
 		MainView.BasketIndex(0);
@@ -35,6 +37,35 @@ namespace winrt::NutritionBasket::implementation
 		SecondItem.AddElem(L"Sugar", L"200g");
 		SecondItem.AddElem(L"Carb", L"47850g");
 		SecondView.Basket().Append(SecondItem);
+
+		NutritionBasket::BluePrint PreLoadedBluePrint = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint.Name(L"Apple");
+		PreLoadedBluePrint.Amount(L"99g");
+		PreLoadedBluePrint.AddElem(L"Fat", L"9g");
+		PreLoadedBluePrint.AddElem(L"Sugar", L"2999g");
+		PreLoadedBluePrint.AddElem(L"Carb", L"499999g");
+		NutritionBasket::BluePrint PreLoadedBluePrint2 = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint2.Name(L"Green Apple");
+		PreLoadedBluePrint2.Amount(L"30g");
+		PreLoadedBluePrint2.AddElem(L"Fat", L"1g");
+		PreLoadedBluePrint2.AddElem(L"Sugar", L"200g");
+		PreLoadedBluePrint2.AddElem(L"Carb", L"47850g");
+		NutritionBasket::BluePrint PreLoadedBluePrint3 = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint3.Name(L"Orange");
+		PreLoadedBluePrint3.Amount(L"333g");
+		PreLoadedBluePrint3.AddElem(L"Fat", L"3g");
+		PreLoadedBluePrint3.AddElem(L"Sugar", L"333g");
+		PreLoadedBluePrint3.AddElem(L"Carb", L"3333333g");
+		NutritionBasket::BluePrint PreLoadedBluePrint4 = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint4.Name(L"Orange Juice");
+		PreLoadedBluePrint4.Amount(L"333g");
+		PreLoadedBluePrint4.AddElem(L"Fat", L"3g");
+		PreLoadedBluePrint4.AddElem(L"Sugar", L"333g");
+		PreLoadedBluePrint4.AddElem(L"Carb", L"3333333g");
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint);
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint2);
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint3);
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint4);
 	}
 
 	void MainPage::MenuClickHandler(IInspectable const&, RoutedEventArgs const&)
@@ -116,5 +147,19 @@ namespace winrt::NutritionBasket::implementation
 	NutritionBasket::MenuViewModel MainPage::MenuViewModel()
 	{
 		return m_menuViewModel;
+	}
+
+	NutritionBasket::BluePrintList MainPage::LocalBluePrints()
+	{
+		return m_localBluePrints;
+	}
+
+	void MainPage::LowerCase(char * arr)
+	{
+		if (arr[0] == '\0') return;
+		int i = -1;
+		while (arr[++i] != '\0') {
+			if (arr[i] <= 'Z' && arr[i] >= 'A') arr[i] = arr[i] - ('Z' - 'z');
+		}
 	}
 }
