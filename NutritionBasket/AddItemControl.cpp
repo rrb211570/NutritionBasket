@@ -25,14 +25,32 @@ namespace winrt::NutritionBasket::implementation
 		return m_selectedItem;
 	}
 
-	void AddItemControl::SearchBarEntryHandler(IInspectable const& sender, Input::KeyRoutedEventArgs const& e)
+	void AddItemControl::OpenSearchDialogHandler(IInspectable const& sender, RoutedEventArgs const& e)
 	{
-		winrt::hstring entryName = SearchBar().Text();
-		if (entryName.size() == 0) return; // if user typed enter or bksp on empty searchBox
-		// Update LocalSearchList
-		SearchResults().Visibility(Visibility::Visible);
+		SearchBar().Text(L"");
+		searchUSDA().Visibility(Visibility::Visible);
+		USDASearchResults().Visibility(Visibility::Collapsed);
+		SearchResults().Visibility(Visibility::Collapsed);
 		m_selectedItem = NULL;
+		ResetEntryBG();
+		AddItemDialog().ShowAsync();
+	}
+
+	void AddItemControl::SearchBarEntryHandler(IInspectable const& sender, Controls::TextChangedEventArgs const& e)
+	{
+		NoLocalResults().Visibility(Visibility::Collapsed);
+		winrt::hstring entryName = SearchBar().Text();
+		if(m_selectedItem==NULL) ResetEntryBG();
+		if (m_selectedItem != NULL && m_selectedItem.Name() != entryName) {
+			m_selectedItem = NULL;
+			ResetEntryBG();
+		} else if(m_selectedItem != NULL && m_selectedItem.Name() == entryName) return;
 		m_localSearchList.BluePrints().Clear();
+		if (entryName.size() == 0) {
+			SearchResults().Visibility(Visibility::Collapsed);
+			return;
+		}
+		SearchResults().Visibility(Visibility::Visible);
 		// triggers strstr() on each BluePrint : BluePrintList, to populate LocalSearchList()
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
 		for (int i = 0; i < main->LocalBluePrints().BluePrints().Size(); ++i) {
@@ -46,16 +64,9 @@ namespace winrt::NutritionBasket::implementation
 			if (strstr(lowerBluePrintName, lowerEntryName) != NULL) {
 				m_localSearchList.BluePrints().Append(main->LocalBluePrints().BluePrints().GetAt(i));
 			}
+			if (m_localSearchList.BluePrints().Size() == 5) break;
 		}
-	}
-
-	void AddItemControl::ClearSearchBarHandler(IInspectable const& sender, RoutedEventArgs const& e)
-	{
-		// Update LocalSearchList
-		SearchBar().Text(L"");
-		searchUSDA().Visibility(Visibility::Visible);
-		USDASearchResults().Visibility(Visibility::Collapsed);
-		SearchResults().Visibility(Visibility::Collapsed);
+		if (m_localSearchList.BluePrints().Size() == 0) NoLocalResults().Visibility(Visibility::Visible);
 	}
 
 	void AddItemControl::SelectItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
@@ -64,19 +75,28 @@ namespace winrt::NutritionBasket::implementation
 		SearchResults().Visibility(Visibility::Collapsed);
 		// update selected item
 		m_selectedItem = sender.as<Controls::Button>().DataContext().as<NutritionBasket::BluePrint>();
-	}
-
-	void AddItemControl::LocalExpandClickHandler(IInspectable const& sender, RoutedEventArgs const&)
-	{
+		HighlightValidEntry();
 	}
 
 	void AddItemControl::SearchUSDAClickHandler(IInspectable const& sender, RoutedEventArgs const&)
 	{
-		USDASearchResults().Visibility(Visibility::Visible);
 		searchUSDA().Visibility(Visibility::Collapsed);
+		USDASuccess().Visibility(Visibility::Collapsed);
+		USDAError().Visibility(Visibility::Collapsed);
+		USDASearchResults().Visibility(Visibility::Visible);
+		// Rest API to get USDA results
+
+		// if successful, show USDASuccess
+		USDASuccess().Visibility(Visibility::Visible);
+		// if failure, show USDAError
+		USDAError().Visibility(Visibility::Visible);
 	}
 
-	void AddItemControl::USDAExpandClickHandler(IInspectable const& sender, RoutedEventArgs const&)
+	void AddItemControl::USDAPrevClickHandler(IInspectable const& sender, RoutedEventArgs const&)
+	{
+	}
+
+	void AddItemControl::USDANextClickHandler(IInspectable const& sender, RoutedEventArgs const&)
 	{
 	}
 
@@ -104,14 +124,31 @@ namespace winrt::NutritionBasket::implementation
 			}
 			main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
 		}
-		SearchBar().Text(L"");
-		main->ClosePopUps();
+		ResetEntryBG();
+		AddItemDialog().Hide();
 	}
 
-	void AddItemControl::AddItemCancelClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void AddItemControl::CustomClickHandler(IInspectable const& sender, Controls::ContentDialogButtonClickEventArgs const&)
+	{
+		ResetEntryBG();
+	}
+
+	void AddItemControl::AddItemCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
 	{
 		SearchBar().Text(L"");
-		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
-		main->ClosePopUps();
+		ResetEntryBG();
+	}
+
+	void AddItemControl::HighlightValidEntry()
+	{
+		SearchBar().Style(validEntry());
+		AddItemButton().IsEnabled(true);
+	}
+
+	void AddItemControl::ResetEntryBG()
+	{
+		Controls::TextBox tmp;
+		SearchBar().Style(tmp.Style());
+		AddItemButton().IsEnabled(false);
 	}
 }

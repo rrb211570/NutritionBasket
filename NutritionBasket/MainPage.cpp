@@ -62,10 +62,25 @@ namespace winrt::NutritionBasket::implementation
 		PreLoadedBluePrint4.AddElem(L"Fat", L"3g");
 		PreLoadedBluePrint4.AddElem(L"Sugar", L"333g");
 		PreLoadedBluePrint4.AddElem(L"Carb", L"3333333g");
+		NutritionBasket::BluePrint PreLoadedBluePrint5 = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint5.Name(L"Chickpeas");
+		PreLoadedBluePrint5.Amount(L"333g");
+		PreLoadedBluePrint5.AddElem(L"Fat", L"3g");
+		PreLoadedBluePrint5.AddElem(L"Sugar", L"333g");
+		PreLoadedBluePrint5.AddElem(L"Carb", L"3333333g");
+		NutritionBasket::BluePrint PreLoadedBluePrint6 = winrt::make<NutritionBasket::implementation::BluePrint>();
+		PreLoadedBluePrint6.Name(L"Lemons");
+		PreLoadedBluePrint6.Amount(L"333g");
+		PreLoadedBluePrint6.AddElem(L"Fat", L"3g");
+		PreLoadedBluePrint6.AddElem(L"Sugar", L"333g");
+		PreLoadedBluePrint6.AddElem(L"Carb", L"3333333g");
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint2);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint3);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint4);
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint5);
+		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint6);
+		
 	}
 
 	void MainPage::MenuClickHandler(IInspectable const&, RoutedEventArgs const&)
