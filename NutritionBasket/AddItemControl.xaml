@@ -180,7 +180,7 @@
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Button Content="Add" Click="OpenSearchDialogHandler"/>
-        <ContentDialog x:Name="AddItemDialog" PrimaryButtonText="Custom" PrimaryButtonClick="CustomClickHandler" CloseButtonText="Cancel" CloseButtonClick="AddItemCancelClickHandler">
+        <ContentDialog x:Name="AddItemDialog" PrimaryButtonText="Custom" PrimaryButtonClick="CustomClickHandler" CloseButtonText="Cancel" CloseButtonClick="AddItemCancelClickHandler" Closed="DefaultDialogClosedClickHandler">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock>Search:</TextBlock>
@@ -220,6 +220,30 @@
                         </StackPanel>
                         <TextBlock x:Name="USDAError" Text="Network Error" HorizontalAlignment="Center"/>
                     </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog x:Name="AddCustomItemDialog" PrimaryButtonText="Add" PrimaryButtonClick="AddCustomClickHandler" CloseButtonText="Cancel" CloseButtonClick="AddCustomCancelClickHandler" Closed="CustomDialogClosedClickHandler">
+            <StackPanel> <!-- Can replace with ListBox eventually -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Name:" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="CustomName" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Amount:"/>
+                    <TextBox x:Name="CustomAmount" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Fat:"/>
+                    <TextBox x:Name="CustomFat" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Sugar:"/>
+                    <TextBox x:Name="CustomSugar" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Carbs:"/>
+                    <TextBox x:Name="CustomCarbs" HorizontalAlignment="Right"/>
                 </StackPanel>
             </StackPanel>
         </ContentDialog>

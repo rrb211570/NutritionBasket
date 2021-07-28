@@ -13,6 +13,8 @@ namespace winrt::NutritionBasket::implementation
 	AddItemControl::AddItemControl()
 	{
 		InitializeComponent();
+		m_customClick = false;
+		m_customAdd = false;
 	}
 
 	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()
@@ -40,11 +42,12 @@ namespace winrt::NutritionBasket::implementation
 	{
 		NoLocalResults().Visibility(Visibility::Collapsed);
 		winrt::hstring entryName = SearchBar().Text();
-		if(m_selectedItem==NULL) ResetEntryBG();
+		if (m_selectedItem == NULL) ResetEntryBG();
 		if (m_selectedItem != NULL && m_selectedItem.Name() != entryName) {
 			m_selectedItem = NULL;
 			ResetEntryBG();
-		} else if(m_selectedItem != NULL && m_selectedItem.Name() == entryName) return;
+		}
+		else if (m_selectedItem != NULL && m_selectedItem.Name() == entryName) return;
 		m_localSearchList.BluePrints().Clear();
 		if (entryName.size() == 0) {
 			SearchResults().Visibility(Visibility::Collapsed);
@@ -105,38 +108,65 @@ namespace winrt::NutritionBasket::implementation
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
 		int index = main->BodyList().SelectedIndex();
 		// attach name input
-		if (SelectedItem() == NULL) {
-			NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(L"Invalid", L"150g");
-			ClickItem.BasketIndex(index);
-			ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
-			// attach nutri input
-			ClickItem.AddElem(L"Fat", L"30g");
-			ClickItem.AddElem(L"Sugar", L"110g");
-			ClickItem.AddElem(L"Carbs", L"1111g");
-			main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
-		} else {
-			NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(SelectedItem().Name(), SelectedItem().Amount());
-			ClickItem.BasketIndex(index);
-			ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
-			// attach nutri input
-			for (int i = 0; i < SelectedItem().Elems().Size(); ++i) {
-				ClickItem.AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), SelectedItem().Elems().GetAt(i).Amount());
-			}
-			main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
+		NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(SelectedItem().Name(), SelectedItem().Amount());
+		ClickItem.BasketIndex(index);
+		ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
+		// attach nutri input
+		for (int i = 0; i < SelectedItem().Elems().Size(); ++i) {
+			ClickItem.AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), SelectedItem().Elems().GetAt(i).Amount());
 		}
+		main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
 		ResetEntryBG();
 		AddItemDialog().Hide();
 	}
 
 	void AddItemControl::CustomClickHandler(IInspectable const& sender, Controls::ContentDialogButtonClickEventArgs const&)
 	{
+		SearchBar().Text(L"");
 		ResetEntryBG();
+		m_customClick = true;
 	}
 
 	void AddItemControl::AddItemCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
 	{
 		SearchBar().Text(L"");
 		ResetEntryBG();
+	}
+
+	void AddItemControl::DefaultDialogClosedClickHandler(IInspectable const& sender, Controls::ContentDialogClosedEventArgs const&)
+	{
+		if (m_customClick == true) {
+			m_customClick = false;
+			AddCustomItemDialog().ShowAsync();
+		}
+	}
+
+	void AddItemControl::CustomDialogClosedClickHandler(IInspectable const& sender, Controls::ContentDialogClosedEventArgs const&)
+	{
+		if (m_customAdd == true) {
+			m_customAdd = false;
+		} else {
+			AddItemDialog().ShowAsync();
+		}
+	}
+
+	void AddItemControl::AddCustomClickHandler(IInspectable const& sender, Controls::ContentDialogButtonClickEventArgs const&)
+	{
+		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
+		int index = main->BodyList().SelectedIndex();
+		NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(CustomName().Text(), CustomAmount().Text());
+		ClickItem.BasketIndex(index);
+		ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
+		// attach nutri input
+		ClickItem.AddElem(L"Fat", CustomFat().Text());
+		ClickItem.AddElem(L"Sugar", CustomSugar().Text());
+		ClickItem.AddElem(L"Carbs", CustomCarbs().Text());
+		main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
+		m_customAdd = true;
+	}
+
+	void AddItemControl::AddCustomCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
+	{
 	}
 
 	void AddItemControl::HighlightValidEntry()

@@ -29,12 +29,19 @@ namespace winrt::NutritionBasket::implementation
         void CustomClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
         void AddItemCancelClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
 
+        void DefaultDialogClosedClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogClosedEventArgs  const&);
+        void CustomDialogClosedClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogClosedEventArgs  const&);
+        void AddCustomClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
+        void AddCustomCancelClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
+
         void HighlightValidEntry();
         void ResetEntryBG();
         
     private:
         NutritionBasket::BluePrintList m_localSearchList;
         NutritionBasket::BluePrint m_selectedItem;
+        boolean m_customClick;
+        boolean m_customAdd;
     };
 }
 
