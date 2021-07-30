@@ -15,6 +15,7 @@ namespace winrt::NutritionBasket::implementation
 		InitializeComponent();
 		m_customClick = false;
 		m_customAdd = false;
+		USDA_API thing = USDA_API();
 	}
 
 	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()

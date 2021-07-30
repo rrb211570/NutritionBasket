@@ -8,6 +8,7 @@
 #include "AddItemControl.g.h"
 #include "BluePrintList.h"
 #include "BluePrint.h"
+#include "USDA_API.h"
 
 namespace winrt::NutritionBasket::implementation
 {

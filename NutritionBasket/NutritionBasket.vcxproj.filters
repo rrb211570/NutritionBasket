@@ -42,6 +42,7 @@
     <ClCompile Include="ItemList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="USDA_API.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="ItemList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="USDA_API.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

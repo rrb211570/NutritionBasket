@@ -106,15 +106,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Rakesh\Documents\Libraries_for_VS\cpp-httplib-0.9.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Rakesh\Documents\Libraries_for_VS\cpp-httplib-0.9.1;C:\Program Files\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Rakesh\Documents\Libraries_for_VS\cpp-httplib-0.9.1\cpp-httplib-0.9.1;C:\Program Files\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\OpenSSL-Win64\lib\libssl.lib;C:\Program Files\OpenSSL-Win64\lib\libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\OpenSSL-Win64\lib\libssl.lib;C:\Program Files\OpenSSL-Win64\lib\libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -188,6 +189,7 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="USDA_API.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -291,6 +293,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="USDA_API.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="AddItemControl.idl">
