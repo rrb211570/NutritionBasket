@@ -11,7 +11,6 @@ namespace winrt::NutritionBasket::implementation
 {
 	MainPage::MainPage()
 	{
-		USDA_API tmp = USDA_API();
 		InitializeComponent();
 		NutritionBasket::BasketViewModel MainView = winrt::make<NutritionBasket::implementation::BasketViewModel>();
 		MainView.BasketIndex(0);
@@ -80,7 +79,7 @@ namespace winrt::NutritionBasket::implementation
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint4);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint5);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint6);
-		
+		USDA_API tmp = USDA_API();
 	}
 
 	void MainPage::MenuClickHandler(IInspectable const&, RoutedEventArgs const&)
