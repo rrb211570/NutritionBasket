@@ -1,0 +1,10 @@
+// Result.idl
+
+namespace NutritionBasket
+{
+	runtimeclass Result : Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		Result(String name);
+		String Name;
+	}
+}

@@ -1,8 +1,6 @@
 ﻿#include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
-#include <winrt/Microsoft.UI.Xaml.Media.h>
-#include "icu.h"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
@@ -79,7 +77,6 @@ namespace winrt::NutritionBasket::implementation
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint4);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint5);
 		m_localBluePrints.BluePrints().Append(PreLoadedBluePrint6);
-		USDA_API tmp = USDA_API();
 	}
 
 	void MainPage::MenuClickHandler(IInspectable const&, RoutedEventArgs const&)

@@ -10,7 +10,7 @@ namespace winrt::NutritionBasket::implementation
     {
         m_options = winrt::single_threaded_observable_vector<NutritionBasket::MenuItem>();
         m_options.Append(winrt::make<NutritionBasket::implementation::MenuItem>(L"Baskets"));
-        m_options.Append(winrt::make<NutritionBasket::implementation::MenuItem>(L"Meals"));
+        m_options.Append(winrt::make<NutritionBasket::implementation::MenuItem>(L"Local Ingredients"));
         m_options.Append(winrt::make<NutritionBasket::implementation::MenuItem>(L"Trends"));
     }
 

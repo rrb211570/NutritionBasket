@@ -199,6 +199,10 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Result.h">
+      <DependentUpon>Result.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="USDA_API.h" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +307,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Result.cpp">
+      <DependentUpon>Result.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="USDA_API.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +363,9 @@
     <Midl Include="NutriControl.idl">
       <DependentUpon>NutriControl.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="Result.idl">
+      <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>
   <ItemGroup>

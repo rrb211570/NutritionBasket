@@ -1,11 +1,10 @@
 #pragma once
 
-class USDA_API
-{
+class USDA_API {
 public:
 	USDA_API();
-	void Initialize();
-private:
-	//private data structs to hold parsed API data
-};
+	std::map<winrt::hstring, int> Search(winrt::hstring term);
 
+private:
+
+};

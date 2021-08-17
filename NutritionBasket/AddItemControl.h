@@ -8,6 +8,7 @@
 #include "AddItemControl.g.h"
 #include "BluePrintList.h"
 #include "BluePrint.h"
+#include "Result.h"
 #include "USDA_API.h"
 
 namespace winrt::NutritionBasket::implementation
@@ -17,12 +18,15 @@ namespace winrt::NutritionBasket::implementation
         AddItemControl();
         NutritionBasket::BluePrintList LocalSearchList();
         NutritionBasket::BluePrint SelectedItem();
+        Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> USDAResults();
 
         void OpenSearchDialogHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& e);
         void SearchBarEntryHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::TextChangedEventArgs const& e);
 
         void SelectItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
         void SearchUSDAClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
+        void SearchCoRoutine();
+        void SelectUSDAItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
         void USDAPrevClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
         void USDANextClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
 
@@ -41,6 +45,7 @@ namespace winrt::NutritionBasket::implementation
     private:
         NutritionBasket::BluePrintList m_localSearchList;
         NutritionBasket::BluePrint m_selectedItem;
+        Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> m_USDAResults;
         boolean m_customClick;
         boolean m_customAdd;
     };

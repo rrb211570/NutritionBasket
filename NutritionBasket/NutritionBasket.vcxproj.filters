@@ -30,6 +30,9 @@
     <Midl Include="BluePrintList.idl">
       <Filter>View Models</Filter>
     </Midl>
+    <Midl Include="Result.idl">
+      <Filter>View Models</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -52,8 +55,8 @@
     <ClInclude Include="ItemList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="USDA_API.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="USDA_API.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

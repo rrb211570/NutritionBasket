@@ -203,21 +203,22 @@
                     <StackPanel x:Name="USDASearchResults">
                         <TextBlock Text="USDA Results"/>
                         <StackPanel x:Name="USDASuccess">
-                            <!--<ListBox ItemsSource="{x:Bind USDASearchList}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate x:DataType="local:USDASearchResult">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Button Click="SelectItemClickHandler" Content="{x:Bind Name, Mode=OneWay}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ListBox>-->
+                            <ListBox ItemsSource="{x:Bind USDAResults}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:Result">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Click="SelectUSDAItemClickHandler" Content="{x:Bind Name, Mode=OneWay}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
                             <TextBlock Text="-----------Temporary USDA Results"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button x:Name="USDAPrev" Click="USDAPrevClickHandler">&lt;</Button>
                                 <Button x:Name="USDANext" Click="USDANextClickHandler">&gt;</Button>
                             </StackPanel>
                         </StackPanel>
+                        <TextBlock x:Name="USDAEmpty" Text="No results found" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="USDAError" Text="Network Error" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>

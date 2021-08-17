@@ -15,7 +15,7 @@ namespace winrt::NutritionBasket::implementation
 		InitializeComponent();
 		m_customClick = false;
 		m_customAdd = false;
-		USDA_API thing = USDA_API();
+		m_USDAResults = winrt::single_threaded_observable_vector<NutritionBasket::Result>();
 	}
 
 	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()
@@ -26,6 +26,11 @@ namespace winrt::NutritionBasket::implementation
 	NutritionBasket::BluePrint AddItemControl::SelectedItem()
 	{
 		return m_selectedItem;
+	}
+
+	Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> AddItemControl::USDAResults()
+	{
+		return m_USDAResults;
 	}
 
 	void AddItemControl::OpenSearchDialogHandler(IInspectable const& sender, RoutedEventArgs const& e)
@@ -42,6 +47,8 @@ namespace winrt::NutritionBasket::implementation
 	void AddItemControl::SearchBarEntryHandler(IInspectable const& sender, Controls::TextChangedEventArgs const& e)
 	{
 		NoLocalResults().Visibility(Visibility::Collapsed);
+		USDASearchResults().Visibility(Visibility::Collapsed);
+		searchUSDA().Visibility(Visibility::Visible);
 		winrt::hstring entryName = SearchBar().Text();
 		if (m_selectedItem == NULL) ResetEntryBG();
 		if (m_selectedItem != NULL && m_selectedItem.Name() != entryName) {
@@ -84,16 +91,38 @@ namespace winrt::NutritionBasket::implementation
 
 	void AddItemControl::SearchUSDAClickHandler(IInspectable const& sender, RoutedEventArgs const&)
 	{
+		m_USDAResults.Clear();
 		searchUSDA().Visibility(Visibility::Collapsed);
 		USDASuccess().Visibility(Visibility::Collapsed);
+		USDAEmpty().Visibility(Visibility::Collapsed);
 		USDAError().Visibility(Visibility::Collapsed);
 		USDASearchResults().Visibility(Visibility::Visible);
-		// Rest API to get USDA results
 
-		// if successful, show USDASuccess
-		USDASuccess().Visibility(Visibility::Visible);
-		// if failure, show USDAError
-		USDAError().Visibility(Visibility::Visible);
+		SearchCoRoutine();
+
+		if (m_USDAResults.Size() != 0) USDASuccess().Visibility(Visibility::Visible);
+		else USDAEmpty().Visibility(Visibility::Visible);
+	}
+
+	void AddItemControl::SearchCoRoutine() {
+		USDA_API thing = USDA_API();
+		std::map<winrt::hstring, int> names = thing.Search(SearchBar().Text());
+		// if(names.network error) USDAError().Visibility(Visibility::Visible); return;
+		for (auto entry = names.begin(); entry != names.end(); ++entry) m_USDAResults.Append(winrt::make<NutritionBasket::implementation::Result>(entry->first));
+	}
+
+	void AddItemControl::SelectUSDAItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
+	{
+		SearchBar().Text(sender.as<Controls::Button>().Content().as<winrt::hstring>());
+		SearchResults().Visibility(Visibility::Collapsed);
+		// update selected item
+		m_selectedItem = winrt::make<NutritionBasket::implementation::BluePrint>();
+		m_selectedItem.Name(SearchBar().Text());
+		m_selectedItem.Amount(L"99g");
+		m_selectedItem.AddElem(L"Fat", L"9g");
+		m_selectedItem.AddElem(L"Sugar", L"2999g");
+		m_selectedItem.AddElem(L"Carb", L"499999g");
+		HighlightValidEntry();
 	}
 
 	void AddItemControl::USDAPrevClickHandler(IInspectable const& sender, RoutedEventArgs const&)

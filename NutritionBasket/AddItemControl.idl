@@ -1,6 +1,7 @@
 // AddItemControl.idl
 import "BluePrintList.idl";
 import "BluePrint.idl";
+import "Result.idl";
 
 namespace NutritionBasket
 {
@@ -9,6 +10,6 @@ namespace NutritionBasket
         AddItemControl();
         BluePrintList LocalSearchList{ get; };
         BluePrint SelectedItem{ get; };
-        // BluePrintList USDASearchList{ get; };
+        Windows.Foundation.Collections.IObservableVector<Result> USDAResults{ get; };
     }
 }

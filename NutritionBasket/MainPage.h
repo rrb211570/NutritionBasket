@@ -5,7 +5,6 @@
 #include "AddItemControl.h"
 #include "BodyViewModel.h"
 #include "MenuViewModel.h"
-#include "USDA_API.h"
 
 namespace winrt::NutritionBasket::implementation
 {
