@@ -4,7 +4,8 @@ namespace NutritionBasket
 {
 	runtimeclass Result : Windows.UI.Xaml.Data.INotifyPropertyChanged
 	{
-		Result(String name);
+		Result(String name, String fdcid);
 		String Name;
+		String Fdcid;
 	}
 }

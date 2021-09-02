@@ -199,6 +199,7 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h">
       <DependentUpon>Result.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -374,6 +375,10 @@
     <Text Include="readme.txt">
       <DeploymentContent>false</DeploymentContent>
     </Text>
+    <Text Include="StoredBlueprints.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NutritionBasket.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

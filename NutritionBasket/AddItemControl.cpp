@@ -16,6 +16,7 @@ namespace winrt::NutritionBasket::implementation
 		m_customClick = false;
 		m_customAdd = false;
 		m_USDAResults = winrt::single_threaded_observable_vector<NutritionBasket::Result>();
+		m_USDA_API = USDA_API();
 	}
 
 	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()
@@ -105,10 +106,11 @@ namespace winrt::NutritionBasket::implementation
 	}
 
 	void AddItemControl::SearchCoRoutine() {
-		USDA_API thing = USDA_API();
-		std::map<winrt::hstring, int> names = thing.Search(SearchBar().Text());
+
+		std::map<winrt::hstring, int> names = m_USDA_API.Search(SearchBar().Text());
 		// if(names.network error) USDAError().Visibility(Visibility::Visible); return;
-		for (auto entry = names.begin(); entry != names.end(); ++entry) m_USDAResults.Append(winrt::make<NutritionBasket::implementation::Result>(entry->first));
+		for (auto entry = names.begin(); entry != names.end(); ++entry) m_USDAResults.Append
+			(winrt::make<NutritionBasket::implementation::Result>(entry->first, to_hstring(entry->second)));
 	}
 
 	void AddItemControl::SelectUSDAItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
@@ -119,9 +121,9 @@ namespace winrt::NutritionBasket::implementation
 		m_selectedItem = winrt::make<NutritionBasket::implementation::BluePrint>();
 		m_selectedItem.Name(SearchBar().Text());
 		m_selectedItem.Amount(L"99g");
-		m_selectedItem.AddElem(L"Fat", L"9g");
-		m_selectedItem.AddElem(L"Sugar", L"2999g");
-		m_selectedItem.AddElem(L"Carb", L"499999g");
+		NutritionBasket::Result entry = sender.as<Controls::Button>().DataContext().as<NutritionBasket::Result>();
+		std::map<winrt::hstring, int> nutrients = m_USDA_API.ResponseItemNutri(std::stoi(entry.Fdcid().c_str()));
+		for (auto i = nutrients.begin(); i != nutrients.end(); ++i) m_selectedItem.AddElem((*i).first, winrt::to_hstring((*i).second));
 		HighlightValidEntry();
 	}
 
@@ -146,6 +148,7 @@ namespace winrt::NutritionBasket::implementation
 			ClickItem.AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), SelectedItem().Elems().GetAt(i).Amount());
 		}
 		main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
+		UpdateLocalBlueprints();
 		ResetEntryBG();
 		AddItemDialog().Hide();
 	}
@@ -175,7 +178,8 @@ namespace winrt::NutritionBasket::implementation
 	{
 		if (m_customAdd == true) {
 			m_customAdd = false;
-		} else {
+		}
+		else {
 			AddItemDialog().ShowAsync();
 		}
 	}
@@ -210,5 +214,10 @@ namespace winrt::NutritionBasket::implementation
 		Controls::TextBox tmp;
 		SearchBar().Style(tmp.Style());
 		AddItemButton().IsEnabled(false);
+	}
+
+	void AddItemControl::UpdateLocalBlueprints()
+	{
+		
 	}
 }

@@ -6,9 +6,10 @@
 
 namespace winrt::NutritionBasket::implementation
 {
-    Result::Result(winrt::hstring name)
+    Result::Result(winrt::hstring name, winrt::hstring fdcid)
     {
         m_name = name;
+        m_Fdcid = fdcid;
     }
 
     winrt::hstring Result::Name() {
@@ -20,6 +21,18 @@ namespace winrt::NutritionBasket::implementation
         {
             m_name = value;
             m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Name" });
+        }
+    }
+
+    winrt::hstring Result::Fdcid() {
+        return m_Fdcid;
+    }
+
+    void Result::Fdcid(winrt::hstring const& value) {
+        if (m_Fdcid != value)
+        {
+            m_Fdcid = value;
+            m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Fdcid" });
         }
     }
 

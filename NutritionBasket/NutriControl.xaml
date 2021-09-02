@@ -26,6 +26,7 @@
                                 <DataTemplate x:DataType="local:BasketItemNutriElem">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock VerticalAlignment="Center" Text="{x:Bind Nutrient, Mode=OneWay}"/>
+                                        <TextBlock VerticalAlignment="Center" Text=" : "/>
                                         <TextBlock VerticalAlignment="Center" Text="{x:Bind Amount, Mode=OneWay}"/>
                                     </StackPanel>
                                 </DataTemplate>

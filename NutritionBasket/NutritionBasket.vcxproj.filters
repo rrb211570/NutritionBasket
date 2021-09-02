@@ -57,6 +57,7 @@
     </ClInclude>
     <ClInclude Include="json.hpp" />
     <ClInclude Include="USDA_API.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -143,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+    <Text Include="StoredBlueprints.txt" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -161,5 +163,8 @@
     <Page Include="NutriControl.xaml">
       <Filter>My Custom Controls</Filter>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NutritionBasket.rc" />
   </ItemGroup>
 </Project>

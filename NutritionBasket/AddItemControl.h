@@ -41,6 +41,7 @@ namespace winrt::NutritionBasket::implementation
 
         void HighlightValidEntry();
         void ResetEntryBG();
+        void UpdateLocalBlueprints();
         
     private:
         NutritionBasket::BluePrintList m_localSearchList;
@@ -48,6 +49,7 @@ namespace winrt::NutritionBasket::implementation
         Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> m_USDAResults;
         boolean m_customClick;
         boolean m_customAdd;
+        USDA_API m_USDA_API;
     };
 }
 
