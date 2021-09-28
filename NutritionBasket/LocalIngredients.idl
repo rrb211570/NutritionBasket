@@ -1,0 +1,12 @@
+// LocalIngredients.idl
+import "BluePrintList.idl";
+
+namespace NutritionBasket
+{
+    [bindable]
+    runtimeclass LocalIngredients : Windows.UI.Xaml.Controls.Page
+    {
+        LocalIngredients();
+        BluePrintList BluePrintList{ get; };
+    }
+}

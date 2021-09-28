@@ -4,7 +4,7 @@ namespace NutritionBasket
 	runtimeclass BasketItemNutriElem : Windows.UI.Xaml.Data.INotifyPropertyChanged
 	{
 		BasketItemNutriElem(String nutrient, String amount);
-String Nutrient;
-String Amount;
+        String Nutrient;
+        String Amount;
 	}
 }

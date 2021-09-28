@@ -4,6 +4,7 @@
 #if __has_include("ClearBasketsControl.g.cpp")
 #include "ClearBasketsControl.g.cpp"
 #endif
+#include "Storage.h"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
@@ -25,7 +26,7 @@ namespace winrt::NutritionBasket::implementation
         throw hresult_not_implemented();
     }
 
-    void ClearBasketsControl::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+    void ClearBasketsControl::OpenClearBasketsDialog()
     {
         MyDialog().ShowAsync();
     }
@@ -34,6 +35,7 @@ namespace winrt::NutritionBasket::implementation
     {
         MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
         main->BodyViewModel().BasketViews().Clear();
+        Storage::SaveLayout();
         main->ClosePopUps();
     }
 }

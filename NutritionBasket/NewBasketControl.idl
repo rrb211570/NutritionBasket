@@ -3,6 +3,7 @@ namespace NutritionBasket
     runtimeclass NewBasketControl : Windows.UI.Xaml.Controls.UserControl
     {
         NewBasketControl();
+        void OpenNewBasketDialog();
         Int32 MyProperty;
     }
 }

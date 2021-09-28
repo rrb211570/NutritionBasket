@@ -3,6 +3,7 @@ namespace NutritionBasket
     runtimeclass ClearBasketsControl : Windows.UI.Xaml.Controls.UserControl
     {
         ClearBasketsControl();
+        void OpenClearBasketsDialog();
         Int32 MyProperty;
     }
 }

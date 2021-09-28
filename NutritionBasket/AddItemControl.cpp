@@ -4,57 +4,48 @@
 #if __has_include("AddItemControl.g.cpp")
 #include "AddItemControl.g.cpp"
 #endif
+constexpr boolean validEntryFlag = true;
+constexpr boolean unknownEntryFlag = false;
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
-
 namespace winrt::NutritionBasket::implementation
 {
-	AddItemControl::AddItemControl()
-	{
-		InitializeComponent();
-		m_customClick = false;
-		m_customAdd = false;
-		m_USDAResults = winrt::single_threaded_observable_vector<NutritionBasket::Result>();
-		m_USDA_API = USDA_API();
-	}
+	AddItemControl::AddItemControl() { InitializeComponent(); }
 
-	NutritionBasket::BluePrintList AddItemControl::LocalSearchList()
-	{
-		return m_localSearchList;
-	}
+	NutritionBasket::BluePrintList AddItemControl::LocalSearchList() { return m_localSearchList; }
+	NutritionBasket::BluePrint AddItemControl::SelectedItem() { return m_selectedItem; }
+	hstring AddItemControl::SearchBarText() { return SearchBar().Text(); }
 
-	NutritionBasket::BluePrint AddItemControl::SelectedItem()
-	{
-		return m_selectedItem;
-	}
+	void AddItemControl::SearchBarText(hstring s) { SearchBar().Text(s); }
+	void AddItemControl::SetSelectedItem(NutritionBasket::BluePrint item) { m_selectedItem = item; }
+	void AddItemControl::HideSearchResults() { SearchResults().Visibility(Visibility::Collapsed); }
 
-	Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> AddItemControl::USDAResults()
+	void AddItemControl::OpenSearchDialog()
 	{
-		return m_USDAResults;
-	}
-
-	void AddItemControl::OpenSearchDialogHandler(IInspectable const& sender, RoutedEventArgs const& e)
-	{
-		SearchBar().Text(L"");
-		searchUSDA().Visibility(Visibility::Visible);
-		USDASearchResults().Visibility(Visibility::Collapsed);
 		SearchResults().Visibility(Visibility::Collapsed);
+		MySearchUSDAControl().ResetVisibilities();
 		m_selectedItem = NULL;
-		ResetEntryBG();
+		UpdateSearchBarUX(unknownEntryFlag);
+		AddItemButton().IsEnabled(false);
+		AddSelectedItem().Visibility(Visibility::Collapsed);
+		AmountInputError().Visibility(Visibility::Collapsed);
 		AddItemDialog().ShowAsync();
 	}
 
-	void AddItemControl::SearchBarEntryHandler(IInspectable const& sender, Controls::TextChangedEventArgs const& e)
+	void AddItemControl::SearchBarEntryHandler(IInspectable const&, Controls::TextChangedEventArgs const&)
 	{
 		NoLocalResults().Visibility(Visibility::Collapsed);
-		USDASearchResults().Visibility(Visibility::Collapsed);
-		searchUSDA().Visibility(Visibility::Visible);
-		winrt::hstring entryName = SearchBar().Text();
-		if (m_selectedItem == NULL) ResetEntryBG();
+		MySearchUSDAControl().ResetVisibilities();
+		hstring entryName = SearchBar().Text();
+		if (m_selectedItem == NULL) {
+			UpdateSearchBarUX(unknownEntryFlag);
+			AddSelectedItem().Visibility(Visibility::Collapsed);
+		}
 		if (m_selectedItem != NULL && m_selectedItem.Name() != entryName) {
 			m_selectedItem = NULL;
-			ResetEntryBG();
+			UpdateSearchBarUX(unknownEntryFlag);
+			AddSelectedItem().Visibility(Visibility::Collapsed);
 		}
 		else if (m_selectedItem != NULL && m_selectedItem.Name() == entryName) return;
 		m_localSearchList.BluePrints().Clear();
@@ -65,14 +56,14 @@ namespace winrt::NutritionBasket::implementation
 		SearchResults().Visibility(Visibility::Visible);
 		// triggers strstr() on each BluePrint : BluePrintList, to populate LocalSearchList()
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
-		for (int i = 0; i < main->LocalBluePrints().BluePrints().Size(); ++i) {
-			winrt::hstring bluePrintName = main->LocalBluePrints().BluePrints().GetAt(i).Name();
-			char lowerBluePrintName[50];
-			char lowerEntryName[50];
-			strcpy_s(lowerBluePrintName, 50, winrt::to_string(bluePrintName).c_str());
-			strcpy_s(lowerEntryName, 50, winrt::to_string(entryName).c_str());
-			main->LowerCase(lowerBluePrintName);
-			main->LowerCase(lowerEntryName);
+		for (uint8_t i = 0; i < main->LocalBluePrints().BluePrints().Size(); ++i) {
+			hstring bluePrintName = main->LocalBluePrints().BluePrints().GetAt(i).Name();
+			char lowerBluePrintName[100];
+			char lowerEntryName[100];
+			strcpy_s(lowerBluePrintName, 100, to_string(bluePrintName).c_str());
+			strcpy_s(lowerEntryName, 100, to_string(entryName).c_str());
+			Util::LowerCase(lowerBluePrintName);
+			Util::LowerCase(lowerEntryName);
 			if (strstr(lowerBluePrintName, lowerEntryName) != NULL) {
 				m_localSearchList.BluePrints().Append(main->LocalBluePrints().BluePrints().GetAt(i));
 			}
@@ -83,141 +74,116 @@ namespace winrt::NutritionBasket::implementation
 
 	void AddItemControl::SelectItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
 	{
-		SearchBar().Text(sender.as<Controls::Button>().Content().as<winrt::hstring>());
+		SearchBar().Text(sender.as<Controls::Button>().Content().as<hstring>());
 		SearchResults().Visibility(Visibility::Collapsed);
 		// update selected item
 		m_selectedItem = sender.as<Controls::Button>().DataContext().as<NutritionBasket::BluePrint>();
-		HighlightValidEntry();
+		UpdateSearchBarUX(validEntryFlag);
+		AmountInput().Text(L"");
+		AmountInputError().Visibility(Visibility::Collapsed);
+		AddSelectedItem().Visibility(Visibility::Visible);
 	}
 
-	void AddItemControl::SearchUSDAClickHandler(IInspectable const& sender, RoutedEventArgs const&)
-	{
-		m_USDAResults.Clear();
-		searchUSDA().Visibility(Visibility::Collapsed);
-		USDASuccess().Visibility(Visibility::Collapsed);
-		USDAEmpty().Visibility(Visibility::Collapsed);
-		USDAError().Visibility(Visibility::Collapsed);
-		USDASearchResults().Visibility(Visibility::Visible);
-
-		SearchCoRoutine();
-
-		if (m_USDAResults.Size() != 0) USDASuccess().Visibility(Visibility::Visible);
-		else USDAEmpty().Visibility(Visibility::Visible);
+	void AddItemControl::AmountEntryHandler(IInspectable const&, Controls::TextChangedEventArgs const&) {
+		try {
+			std::string numString = to_string(AmountInput().Text());
+			if (numString.size() == 0) {
+				AmountInputError().Visibility(Visibility::Collapsed);
+				AddItemButton().IsEnabled(false);
+				return;
+			}
+			for (int i = 0; i < numString.size(); ++i) {
+				if (!isdigit(numString.at(i))) {
+					numString = "s"; //aka invalid input
+					break;
+				}
+			}
+			if (std::stoi(numString) > 0) {
+				AmountInputError().Visibility(Visibility::Collapsed);
+				AddItemButton().IsEnabled(true);
+			}
+			else {
+				AmountInputError().Visibility(Visibility::Visible);
+				AddItemButton().IsEnabled(false);
+			}
+		}
+		catch (std::invalid_argument const& ex) {
+			// do something
+			AmountInputError().Visibility(Visibility::Visible);
+			AddItemButton().IsEnabled(false);
+		}
 	}
 
-	void AddItemControl::SearchCoRoutine() {
-
-		std::map<winrt::hstring, int> names = m_USDA_API.Search(SearchBar().Text());
-		// if(names.network error) USDAError().Visibility(Visibility::Visible); return;
-		for (auto entry = names.begin(); entry != names.end(); ++entry) m_USDAResults.Append
-			(winrt::make<NutritionBasket::implementation::Result>(entry->first, to_hstring(entry->second)));
-	}
-
-	void AddItemControl::SelectUSDAItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
-	{
-		SearchBar().Text(sender.as<Controls::Button>().Content().as<winrt::hstring>());
-		SearchResults().Visibility(Visibility::Collapsed);
-		// update selected item
-		m_selectedItem = winrt::make<NutritionBasket::implementation::BluePrint>();
-		m_selectedItem.Name(SearchBar().Text());
-		m_selectedItem.Amount(L"99g");
-		NutritionBasket::Result entry = sender.as<Controls::Button>().DataContext().as<NutritionBasket::Result>();
-		std::map<winrt::hstring, int> nutrients = m_USDA_API.ResponseItemNutri(std::stoi(entry.Fdcid().c_str()));
-		for (auto i = nutrients.begin(); i != nutrients.end(); ++i) m_selectedItem.AddElem((*i).first, winrt::to_hstring((*i).second));
-		HighlightValidEntry();
-	}
-
-	void AddItemControl::USDAPrevClickHandler(IInspectable const& sender, RoutedEventArgs const&)
-	{
-	}
-
-	void AddItemControl::USDANextClickHandler(IInspectable const& sender, RoutedEventArgs const&)
-	{
-	}
-
-	void AddItemControl::AddItemClickHandler(IInspectable const& sender, RoutedEventArgs const&)
+	void AddItemControl::AddItemClickHandler(IInspectable const&, RoutedEventArgs const&)
 	{
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
-		int index = main->BodyList().SelectedIndex();
-		// attach name input
-		NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(SelectedItem().Name(), SelectedItem().Amount());
+		uint8_t index = main->BodyList().SelectedIndex();
+		// Build up item
+		NutritionBasket::BasketItem ClickItem = make<NutritionBasket::implementation::BasketItem>();
+		ClickItem.BluePrint().Name(SelectedItem().Name());
+		ClickItem.BluePrint().Amount(L"100");
+		// update BluePrint if necessary
+		UpdateLocalBlueprints(ClickItem.BluePrint());
+		// Add item, w/ nutrition ratio'd by input amount
 		ClickItem.BasketIndex(index);
 		ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
-		// attach nutri input
-		for (int i = 0; i < SelectedItem().Elems().Size(); ++i) {
-			ClickItem.AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), SelectedItem().Elems().GetAt(i).Amount());
-		}
+		ClickItem.BluePrint().Amount(AmountInput().Text());
+		RatioElems(&ClickItem, AmountInput().Text());
+
 		main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
-		UpdateLocalBlueprints();
-		ResetEntryBG();
+
+		UpdateSearchBarUX(unknownEntryFlag);
+		Storage::SaveLayout();
 		AddItemDialog().Hide();
 	}
 
-	void AddItemControl::CustomClickHandler(IInspectable const& sender, Controls::ContentDialogButtonClickEventArgs const&)
+	void AddItemControl::DefaultDialogClosedClickHandler(IInspectable const&, Controls::ContentDialogClosedEventArgs const&)
 	{
 		SearchBar().Text(L"");
-		ResetEntryBG();
-		m_customClick = true;
+		UpdateSearchBarUX(unknownEntryFlag);
 	}
 
-	void AddItemControl::AddItemCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
+	void AddItemControl::UpdateSearchBarUX(boolean state)
 	{
-		SearchBar().Text(L"");
-		ResetEntryBG();
-	}
-
-	void AddItemControl::DefaultDialogClosedClickHandler(IInspectable const& sender, Controls::ContentDialogClosedEventArgs const&)
-	{
-		if (m_customClick == true) {
-			m_customClick = false;
-			AddCustomItemDialog().ShowAsync();
-		}
-	}
-
-	void AddItemControl::CustomDialogClosedClickHandler(IInspectable const& sender, Controls::ContentDialogClosedEventArgs const&)
-	{
-		if (m_customAdd == true) {
-			m_customAdd = false;
+		if (state) {
+			SearchBar().Style(validEntry());
+			AmountInput().Text(L"");
+			AddSelectedItem().Visibility(Visibility::Visible);
 		}
 		else {
-			AddItemDialog().ShowAsync();
+			Controls::TextBox tmp;
+			SearchBar().Style(tmp.Style());
 		}
 	}
 
-	void AddItemControl::AddCustomClickHandler(IInspectable const& sender, Controls::ContentDialogButtonClickEventArgs const&)
+	void AddItemControl::UpdateLocalBlueprints(NutritionBasket::BluePrint ItemToAdd)
 	{
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
-		int index = main->BodyList().SelectedIndex();
-		NutritionBasket::BasketItem ClickItem = winrt::make<NutritionBasket::implementation::BasketItem>(CustomName().Text(), CustomAmount().Text());
-		ClickItem.BasketIndex(index);
-		ClickItem.ItemIndex(main->BodyViewModel().BasketViews().GetAt(index).Basket().Size());
-		// attach nutri input
-		ClickItem.AddElem(L"Fat", CustomFat().Text());
-		ClickItem.AddElem(L"Sugar", CustomSugar().Text());
-		ClickItem.AddElem(L"Carbs", CustomCarbs().Text());
-		main->BodyViewModel().BasketViews().GetAt(index).Basket().Append(ClickItem);
-		m_customAdd = true;
+		boolean found = false;
+		std::string NewItemName = to_string(ItemToAdd.Name().c_str());
+		for (uint8_t i = 0; i < main->LocalBluePrints().BluePrints().Size(); ++i) {
+			std::string bluePrintName = to_string(main->LocalBluePrints().BluePrints().GetAt(i).Name().c_str());
+			if (strcmp(bluePrintName.c_str(), NewItemName.c_str()) == 0) found = true;
+		}
+		if (found == false) {
+			NutritionBasket::BluePrint NewItem = make<NutritionBasket::implementation::BluePrint>();
+			NewItem.Name(ItemToAdd.Name());
+			NewItem.Amount(ItemToAdd.Amount());
+			for (uint8_t i = 0; i < SelectedItem().Elems().Size(); ++i) {
+				NewItem.AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), SelectedItem().Elems().GetAt(i).Amount());
+			}
+			main->LocalBluePrints().BluePrints().Append(NewItem);
+			auto processOp{ Storage::SaveNewItemAsync(&NewItem) };
+			while (processOp.Status() != Windows::Foundation::AsyncStatus::Completed);
+		}
 	}
 
-	void AddItemControl::AddCustomCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
-	{
-	}
-
-	void AddItemControl::HighlightValidEntry()
-	{
-		SearchBar().Style(validEntry());
-		AddItemButton().IsEnabled(true);
-	}
-
-	void AddItemControl::ResetEntryBG()
-	{
-		Controls::TextBox tmp;
-		SearchBar().Style(tmp.Style());
-		AddItemButton().IsEnabled(false);
-	}
-
-	void AddItemControl::UpdateLocalBlueprints()
-	{
-		
+	void AddItemControl::RatioElems(NutritionBasket::BasketItem* Item, hstring amount) {
+		double ratio = stod(to_string(amount)) / 100;
+		for (uint8_t i = 0; i < SelectedItem().Elems().Size(); ++i) {
+			auto f = SelectedItem().Elems().GetAt(i);
+			double quantity = (round(stod(to_string(SelectedItem().Elems().GetAt(i).Amount())) * ratio * 1000)) / 1000;
+			Item->BluePrint().AddElem(SelectedItem().Elems().GetAt(i).Nutrient(), to_hstring(quantity));
+		}
 	}
 }

@@ -1,0 +1,12 @@
+// CalculationResults.idl
+import "BluePrint.idl";
+
+namespace NutritionBasket
+{
+    runtimeclass CalculationResults : Windows.UI.Xaml.Controls.UserControl
+    {
+        CalculationResults();
+        void OpenCalculationResultsDialog();
+        BluePrint AverageResults{ get; };
+    }
+}

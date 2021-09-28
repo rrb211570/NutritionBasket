@@ -87,7 +87,7 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
-    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgEnabled>false</VcpkgEnabled>
     <VcpkgManifestInstall>true</VcpkgManifestInstall>
     <VcpkgAutoLink>true</VcpkgAutoLink>
     <VcpkgEnableManifest>false</VcpkgEnableManifest>
@@ -116,15 +116,15 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\include;C:\Program Files\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\include;C:\Program Files\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib;C:\Program Files\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\OpenSSL-Win64\lib\openssl.lib;C:\Program Files\OpenSSL-Win64\lib\libcrypto.lib;C:\Program Files\OpenSSL-Win64\lib\libssl.lib;C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib\cpr.lib;C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib\libcurl.lib;C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib;C:\Program Files\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\OpenSSL-Win64\lib\libssl.lib;C:\Program Files\OpenSSL-Win64\lib\libcrypto.lib;C:\Users\rakes\Desktop\vcpkg\installed\x64-windows\lib\cpr.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -165,6 +165,14 @@
       <DependentUpon>BodyViewModel.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="CalculationControl.h">
+      <DependentUpon>CalculationControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="CalculationResults.h">
+      <DependentUpon>CalculationResults.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ClearBasketsControl.h">
       <DependentUpon>ClearBasketsControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -173,15 +181,9 @@
       <DependentUpon>DeleteBasketControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemList.h" />
     <ClInclude Include="json.hpp" />
-    <ClInclude Include="MenuItem.h">
-      <DependentUpon>MenuItem.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="MenuViewModel.h">
-      <DependentUpon>MenuViewModel.idl</DependentUpon>
+    <ClInclude Include="LocalIngredients.h">
+      <DependentUpon>LocalIngredients.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="NewBasketControl.h">
@@ -192,6 +194,7 @@
       <DependentUpon>NutriControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="Parsing.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -204,7 +207,13 @@
       <DependentUpon>Result.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="SearchUSDAControl.h">
+      <DependentUpon>SearchUSDAControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Storage.h" />
     <ClInclude Include="USDA_API.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -213,10 +222,19 @@
     <Page Include="AddItemControl.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="CalculationControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CalculationResults.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ClearBasketsControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DeleteBasketControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LocalIngredients.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
@@ -226,6 +244,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="NutriControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchUSDAControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -272,6 +293,14 @@
       <DependentUpon>BodyViewModel.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="CalculationControl.cpp">
+      <DependentUpon>CalculationControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="CalculationResults.cpp">
+      <DependentUpon>CalculationResults.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ClearBasketsControl.cpp">
       <DependentUpon>ClearBasketsControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -280,14 +309,8 @@
       <DependentUpon>DeleteBasketControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemList.cpp" />
-    <ClCompile Include="MenuItem.cpp">
-      <DependentUpon>MenuItem.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="MenuViewModel.cpp">
-      <DependentUpon>MenuViewModel.idl</DependentUpon>
+    <ClCompile Include="LocalIngredients.cpp">
+      <DependentUpon>LocalIngredients.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="NewBasketControl.cpp">
@@ -298,6 +321,7 @@
       <DependentUpon>NutriControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="Parsing.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -312,7 +336,13 @@
       <DependentUpon>Result.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="SearchUSDAControl.cpp">
+      <DependentUpon>SearchUSDAControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="Storage.cpp" />
     <ClCompile Include="USDA_API.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="AddItemControl.idl">
@@ -340,6 +370,14 @@
     <Midl Include="BodyViewModel.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="CalculationControl.idl">
+      <DependentUpon>CalculationControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="CalculationResults.idl">
+      <DependentUpon>CalculationResults.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="ClearBasketsControl.idl">
       <DependentUpon>ClearBasketsControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -348,14 +386,12 @@
       <DependentUpon>DeleteBasketControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="LocalIngredients.idl">
+      <DependentUpon>LocalIngredients.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>
-    </Midl>
-    <Midl Include="MenuItem.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="MenuViewModel.idl">
-      <SubType>Designer</SubType>
     </Midl>
     <Midl Include="NewBasketControl.idl">
       <DependentUpon>NewBasketControl.xaml</DependentUpon>
@@ -368,14 +404,14 @@
     <Midl Include="Result.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="SearchUSDAControl.idl">
+      <DependentUpon>SearchUSDAControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
-    <Text Include="readme.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
-    <Text Include="StoredBlueprints.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NutritionBasket.rc" />

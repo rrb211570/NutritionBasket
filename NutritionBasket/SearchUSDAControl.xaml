@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="NutritionBasket.SearchUSDAControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutritionBasket"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Button x:Name="searchUSDA" Click="SearchUSDAClickHandler" HorizontalAlignment="Stretch">Search USDA</Button>
+        <StackPanel x:Name="USDASearchResults">
+            <TextBlock Text="USDA Results"/>
+            <StackPanel x:Name="USDASuccess">
+                <ListBox ItemsSource="{x:Bind USDAResults}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="local:Result">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="SelectUSDAItemClickHandler" Content="{x:Bind Name, Mode=OneWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="USDAPrev" Click="USDAPrevClickHandler">&lt;</Button>
+                    <Button x:Name="USDANext" Click="USDANextClickHandler">&gt;</Button>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock x:Name="USDAEmpty" Text="No results found" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="USDAError" Text="Network Error" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -8,7 +8,6 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="ClearBaskets" Click="ClickHandler">Clear All</Button>
         <ContentDialog x:Name="MyDialog" Title="Are you sure?" PrimaryButtonText="Yes" PrimaryButtonClick="ClearClickHandler" CloseButtonText="Cancel">
             <StackPanel>
                 <TextBlock>This will permanently delete all baskets</TextBlock>

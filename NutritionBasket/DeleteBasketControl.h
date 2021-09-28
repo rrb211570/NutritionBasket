@@ -11,12 +11,13 @@ namespace winrt::NutritionBasket::implementation
     struct DeleteBasketControl : DeleteBasketControlT<DeleteBasketControl>
     {
         DeleteBasketControl();
+        void OpenDeleteBasketDialog();
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
 
-        void DeleteColClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
-        void DeleteColCancelClickHandler(Windows::Foundation::IInspectable const& local_flyout, Windows::UI::Xaml::RoutedEventArgs const&);
+        void DeleteColClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
+        void DeleteColCancelClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
     };
 }
 

@@ -4,6 +4,7 @@
 #include <unknwn.h>
 #include <restrictederrorinfo.h>
 #include <hstring.h>
+#include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Syndication.h>

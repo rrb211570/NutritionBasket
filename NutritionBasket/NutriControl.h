@@ -12,22 +12,18 @@ namespace winrt::NutritionBasket::implementation
     {
         NutriControl();
 
-        NutritionBasket::BasketItem BasketItem()
+        NutritionBasket::BluePrint BluePrint()
         {
-            return winrt::unbox_value<NutritionBasket::BasketItem>(GetValue(m_basketItemProperty));
+            return winrt::unbox_value<NutritionBasket::BluePrint>(GetValue(m_bluePrintProperty));
         }
 
-        void BasketItem(NutritionBasket::BasketItem const& value)
-        {
-            SetValue(m_basketItemProperty, winrt::box_value(value));
-        }
+        void BluePrint(NutritionBasket::BluePrint const& value) { SetValue(m_bluePrintProperty, winrt::box_value(value)); }
 
-        static Windows::UI::Xaml::DependencyProperty BasketItemProperty() { return m_basketItemProperty; }
-
-        static void OnBasketItemChanged(Windows::UI::Xaml::DependencyObject const&, Windows::UI::Xaml::DependencyPropertyChangedEventArgs const&);
+        static Windows::UI::Xaml::DependencyProperty BluePrintProperty() { return m_bluePrintProperty; }
+        static void OnBluePrintChanged(Windows::UI::Xaml::DependencyObject const&, Windows::UI::Xaml::DependencyPropertyChangedEventArgs const&);
 
     private:
-        static Windows::UI::Xaml::DependencyProperty m_basketItemProperty;
+        static Windows::UI::Xaml::DependencyProperty m_bluePrintProperty;
     };
 }
 

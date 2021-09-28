@@ -1,5 +1,5 @@
 // NutriControl.idl
-import "BasketItem.idl";
+import "BluePrint.idl";
 
 namespace NutritionBasket
 {
@@ -7,7 +7,7 @@ namespace NutritionBasket
     runtimeclass NutriControl : Windows.UI.Xaml.Controls.UserControl
     {
         NutriControl();
-        static Windows.UI.Xaml.DependencyProperty BasketItemProperty{ get; };
-        BasketItem BasketItem;
+        static Windows.UI.Xaml.DependencyProperty BluePrintProperty{ get; };
+        BluePrint BluePrint;
     }
 }

@@ -18,12 +18,6 @@
     <Midl Include="BodyViewModel.idl">
       <Filter>View Models</Filter>
     </Midl>
-    <Midl Include="MenuItem.idl">
-      <Filter>View Models</Filter>
-    </Midl>
-    <Midl Include="MenuViewModel.idl">
-      <Filter>View Models</Filter>
-    </Midl>
     <Midl Include="BluePrint.idl">
       <Filter>View Models</Filter>
     </Midl>
@@ -35,29 +29,35 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainPage.cpp" />
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="USDA_API.cpp">
+      <Filter>My Custom Controls\AddItem</Filter>
     </ClCompile>
-    <ClCompile Include="ItemList.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
+      <Filter>Miscellaneous</Filter>
     </ClCompile>
-    <ClCompile Include="USDA_API.cpp" />
+    <ClCompile Include="pch.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Storage.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="USDA_API.h">
+      <Filter>My Custom Controls\AddItem</Filter>
     </ClInclude>
-    <ClInclude Include="ItemList.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="json.hpp">
+      <Filter>Miscellaneous</Filter>
     </ClInclude>
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="USDA_API.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsing.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -83,17 +83,8 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Assets">
       <UniqueIdentifier>{e48dc53e-40b1-40cb-970a-f89935452892}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{c77967f3-156f-466d-8c20-8c30ce55cc75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{d71ecdd6-4515-413b-845f-8297623baff5}</UniqueIdentifier>
     </Filter>
     <Filter Include="My Custom Controls">
       <UniqueIdentifier>{38c0f4a4-6af7-441d-b935-92e58c58e360}</UniqueIdentifier>
@@ -101,10 +92,14 @@
     <Filter Include="View Models">
       <UniqueIdentifier>{a9279170-6836-481f-930d-23ea70556a55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="My Custom Controls\AddItem">
+      <UniqueIdentifier>{dfbc182a-aae5-4f2c-a6d7-ca3cba30c63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{5a1097b9-54d7-4a4f-b5f7-2e55265d997d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PropertySheet.props" />
-    <None Include="packages.config" />
     <None Include="@(IcuLibsX86)" />
     <None Include="@(IcuLibsX86)" />
     <None Include="@(IcuLibsX86)" />
@@ -141,17 +136,16 @@
     <None Include="@(IcuLibsX64)" />
     <None Include="@(IcuLibsX64)" />
     <None Include="@(IcuLibsX64)" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
-    <Text Include="StoredBlueprints.txt" />
+    <None Include="packages.config">
+      <Filter>Miscellaneous</Filter>
+    </None>
+    <None Include="PropertySheet.props">
+      <Filter>Miscellaneous</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
     <Page Include="DeleteBasketControl.xaml">
-      <Filter>My Custom Controls</Filter>
-    </Page>
-    <Page Include="AddItemControl.xaml">
       <Filter>My Custom Controls</Filter>
     </Page>
     <Page Include="NewBasketControl.xaml">
@@ -163,8 +157,28 @@
     <Page Include="NutriControl.xaml">
       <Filter>My Custom Controls</Filter>
     </Page>
+    <Page Include="AddItemControl.xaml">
+      <Filter>My Custom Controls\AddItem</Filter>
+    </Page>
+    <Page Include="SearchUSDAControl.xaml">
+      <Filter>My Custom Controls\AddItem</Filter>
+    </Page>
+    <Page Include="CalculationControl.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="CalculationResults.xaml">
+      <Filter>My Custom Controls</Filter>
+    </Page>
+    <Page Include="LocalIngredients.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="NutritionBasket.rc" />
+    <AppxManifest Include="Package.appxmanifest">
+      <Filter>Miscellaneous</Filter>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NutritionBasket.rc">
+      <Filter>Miscellaneous</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -6,42 +6,13 @@
 
 namespace winrt::NutritionBasket::implementation
 {
-    BasketItem::BasketItem(winrt::hstring name, winrt::hstring amount)
+    BasketItem::BasketItem()
     {
-        m_name = name;
-        m_amt = amount;
-        m_elems = winrt::single_threaded_observable_vector<NutritionBasket::BasketItemNutriElem>();
+        m_bluePrint = winrt::make<NutritionBasket::implementation::BluePrint>();
     }
 
-    winrt::hstring BasketItem::Name()
-    {
-        return m_name;
-    }
-
-    winrt::hstring BasketItem::Amount()
-    {
-        return m_amt;
-    }
-
-    void BasketItem::Amount(winrt::hstring const& value)
-    {
-        if (m_amt != value)
-        {
-            m_amt = value;
-            // Call Nutri(updated values);
-            m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Amount" });
-        }
-    }
-
-    void BasketItem::AddElem(winrt::hstring name, winrt::hstring quantity)
-    {
-        m_elems.Append(winrt::make<NutritionBasket::implementation::BasketItemNutriElem>(name, quantity));
-        m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Elems" });
-    }
-
-    Windows::Foundation::Collections::IObservableVector<NutritionBasket::BasketItemNutriElem> BasketItem::Elems()
-    {
-        return m_elems;
+    NutritionBasket::BluePrint BasketItem::BluePrint() {
+        return m_bluePrint;
     }
 
     uint8_t BasketItem::ItemIndex() {
@@ -52,13 +23,8 @@ namespace winrt::NutritionBasket::implementation
         return m_basketIndex;
     }
 
-    void BasketItem::Name(winrt::hstring const& value)
-    {
-        if (m_name != value)
-        {
-            m_name = value;
-            m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Name" });
-        }
+    void BasketItem::UpdateBluePrint(NutritionBasket::BluePrint print) {
+        m_bluePrint = print;
     }
 
     void BasketItem::ItemIndex(uint8_t i) {

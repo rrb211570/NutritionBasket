@@ -1,0 +1,12 @@
+// CalculationControl.idl
+
+namespace NutritionBasket
+{
+    runtimeclass CalculationControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        CalculationControl();
+        Int32 MyProperty;
+        String Days();
+        void Days(String s);
+    }
+}

@@ -19,9 +19,13 @@
                             <Setter Property="TabNavigation" Value="Cycle"/>
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
-                    <StackPanel x:Name="pan">
-                        <TextBlock Text="{x:Bind BasketItem.Amount, Mode=OneWay}"></TextBlock>
-                        <ListBox ItemsSource="{x:Bind BasketItem.Elems}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock> <Run Text="Amount&#160;:&#160;"/></TextBlock> <!-- gimmick to preserve trailing spaces -->
+                            <TextBlock Text="{x:Bind BluePrint.Amount, Mode=OneWay}"/>
+                            <TextBlock Text="g"/>
+                        </StackPanel>
+                        <ListBox ItemsSource="{x:Bind BluePrint.Elems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="local:BasketItemNutriElem">
                                     <StackPanel Orientation="Horizontal">

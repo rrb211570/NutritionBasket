@@ -4,7 +4,9 @@
 #include "DeleteBasketControl.h"
 #include "AddItemControl.h"
 #include "BodyViewModel.h"
-#include "MenuViewModel.h"
+#include "Storage.h"
+#include "Util.h"
+#include "Parsing.h"
 
 namespace winrt::NutritionBasket::implementation
 {
@@ -12,24 +14,24 @@ namespace winrt::NutritionBasket::implementation
     {
         MainPage();
         NutritionBasket::BodyViewModel BodyViewModel();
-        NutritionBasket::MenuViewModel MenuViewModel();
         NutritionBasket::BluePrintList LocalBluePrints();
 
-        void MenuClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+        // Page Navigation
+        void NavIngredientsHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+
+        // MainPage Functions
+        void OpenClearBasketsDialogClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+        void OpenNewBasketDialogClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+        void OpenSearchDialogClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+        void OpenDeleteBasketDialogClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
         void DeleteItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void AvgOptClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
-        void AvgClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
 
         void BasketGotFocus(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
         void ItemGotFocus(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
         winrt::Windows::UI::Xaml::Controls::ListBox FindListBoxAncestor(DependencyObject panel);
         winrt::Windows::UI::Xaml::Controls::TextBox FindNameInput(DependencyObject panel);
         void ClosePopUps();
-
-        void LowerCase(char * arr);
-
     private:
-        NutritionBasket::MenuViewModel m_menuViewModel;
         NutritionBasket::BodyViewModel m_bodyViewModel;
         NutritionBasket::BluePrintList m_localBluePrints;
     };

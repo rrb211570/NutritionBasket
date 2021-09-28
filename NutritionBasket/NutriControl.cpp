@@ -14,21 +14,21 @@ namespace winrt::NutritionBasket::implementation
         InitializeComponent();
     }
 
-    Windows::UI::Xaml::DependencyProperty NutriControl::m_basketItemProperty =
+    Windows::UI::Xaml::DependencyProperty NutriControl::m_bluePrintProperty =
         Windows::UI::Xaml::DependencyProperty::Register(
-            L"BasketItem",
-            winrt::xaml_typename<NutritionBasket::BasketItem>(),
+            L"BluePrint",
+            winrt::xaml_typename<NutritionBasket::BluePrint>(),
             winrt::xaml_typename<NutritionBasket::NutriControl>(),
-            Windows::UI::Xaml::PropertyMetadata{ winrt::box_value(L"default label"), Windows::UI::Xaml::PropertyChangedCallback{ &NutriControl::OnBasketItemChanged } }
+            Windows::UI::Xaml::PropertyMetadata{ winrt::box_value(L"default label"), Windows::UI::Xaml::PropertyChangedCallback{ &NutriControl::OnBluePrintChanged } }
     );
 
-    void NutriControl::OnBasketItemChanged(Windows::UI::Xaml::DependencyObject const& d, Windows::UI::Xaml::DependencyPropertyChangedEventArgs const& /* e */)
+    void NutriControl::OnBluePrintChanged(Windows::UI::Xaml::DependencyObject const& d, Windows::UI::Xaml::DependencyPropertyChangedEventArgs const& /* e */)
     {
         if (NutritionBasket::NutriControl theControl{ d.try_as<NutritionBasket::NutriControl>() })
         {
             // Call members of the projected type via theControl.
 
-            NutritionBasket::implementation::NutriControl* ptr{ winrt::get_self<NutritionBasket::implementation::NutriControl>(theControl) };
+            //NutritionBasket::implementation::NutriControl* ptr{ winrt::get_self<NutritionBasket::implementation::NutriControl>(theControl) };
             // Call members of the implementation type via ptr.
         }
     }

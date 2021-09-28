@@ -11,11 +11,11 @@ namespace winrt::NutritionBasket::implementation
     struct ClearBasketsControl : ClearBasketsControlT<ClearBasketsControl>
     {
         ClearBasketsControl();
+        void OpenClearBasketsDialog();
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
 
-        void ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
         void ClearClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
     };
 }

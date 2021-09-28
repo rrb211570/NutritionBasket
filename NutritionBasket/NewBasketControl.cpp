@@ -25,7 +25,7 @@ namespace winrt::NutritionBasket::implementation
         throw hresult_not_implemented();
     }
 
-	void NewBasketControl::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void NewBasketControl::OpenNewBasketDialog()
 	{
 		MyDialog().ShowAsync();
 	}
@@ -38,6 +38,7 @@ namespace winrt::NutritionBasket::implementation
 		//Update NewView.Name()
 		NewView.Name(BasketTitle().Text());
 		main->BodyViewModel().BasketViews().Append(NewView);
+		Storage::SaveLayout();
 		BasketTitle().Text(L"");
 		main->ClosePopUps();
 	}

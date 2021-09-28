@@ -90,10 +90,10 @@
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
                                         <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF90EE90"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
@@ -179,13 +179,18 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Content="Add" Click="OpenSearchDialogHandler"/>
-        <ContentDialog x:Name="AddItemDialog" PrimaryButtonText="Custom" PrimaryButtonClick="CustomClickHandler" CloseButtonText="Cancel" CloseButtonClick="AddItemCancelClickHandler" Closed="DefaultDialogClosedClickHandler">
+        <ContentDialog x:Name="AddItemDialog" Title="Add Item" CloseButtonText="Cancel" Closed="DefaultDialogClosedClickHandler">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel>
                     <TextBlock>Search:</TextBlock>
                     <TextBox x:Name="SearchBar" TextChanged="SearchBarEntryHandler"/>
-                    <Button x:Name="AddItemButton" Click="AddItemClickHandler">Add</Button>
+                    <StackPanel x:Name="AddSelectedItem">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="AmountInput" TextChanged="AmountEntryHandler" PlaceholderText="Amount"/>
+                            <Button x:Name="AddItemButton" Click="AddItemClickHandler">Add</Button>
+                        </StackPanel>
+                        <TextBlock x:Name="AmountInputError" Text="*Amount must be positive integer*"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="SearchResults">
                     <TextBlock Text="Local Results"/>
@@ -199,55 +204,9 @@
                         </ItemsControl.ItemTemplate>
                     </ListBox>
                     <TextBlock x:Name="NoLocalResults" Text="No local results found." HorizontalAlignment="Center"/>
-                    <Button x:Name="searchUSDA" Click="SearchUSDAClickHandler" HorizontalAlignment="Stretch">Search USDA</Button>
-                    <StackPanel x:Name="USDASearchResults">
-                        <TextBlock Text="USDA Results"/>
-                        <StackPanel x:Name="USDASuccess">
-                            <ListBox ItemsSource="{x:Bind USDAResults}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="local:Result">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Click="SelectUSDAItemClickHandler" Content="{x:Bind Name, Mode=OneWay}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ListBox>
-                            <TextBlock Text="-----------Temporary USDA Results"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button x:Name="USDAPrev" Click="USDAPrevClickHandler">&lt;</Button>
-                                <Button x:Name="USDANext" Click="USDANextClickHandler">&gt;</Button>
-                            </StackPanel>
-                        </StackPanel>
-                        <TextBlock x:Name="USDAEmpty" Text="No results found" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="USDAError" Text="Network Error" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <local:SearchUSDAControl x:Name="MySearchUSDAControl"/>
                 </StackPanel>
             </StackPanel>
         </ContentDialog>
-        <ContentDialog x:Name="AddCustomItemDialog" PrimaryButtonText="Add" PrimaryButtonClick="AddCustomClickHandler" CloseButtonText="Cancel" CloseButtonClick="AddCustomCancelClickHandler" Closed="CustomDialogClosedClickHandler">
-            <StackPanel> <!-- Can replace with ListBox eventually -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Name:" HorizontalAlignment="Left"/>
-                    <TextBox x:Name="CustomName" HorizontalAlignment="Right"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Amount:"/>
-                    <TextBox x:Name="CustomAmount" HorizontalAlignment="Stretch"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Fat:"/>
-                    <TextBox x:Name="CustomFat" HorizontalAlignment="Right"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Sugar:"/>
-                    <TextBox x:Name="CustomSugar" HorizontalAlignment="Right"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Carbs:"/>
-                    <TextBox x:Name="CustomCarbs" HorizontalAlignment="Right"/>
-                </StackPanel>
-            </StackPanel>
-        </ContentDialog>
-
     </StackPanel>
 </UserControl>

@@ -6,11 +6,14 @@
 #include "winrt/Windows.UI.Xaml.Input.h"
 #include "winrt/Windows.UI.Xaml.Controls.Primitives.h"
 #include "AddItemControl.g.h"
+#include "SearchUSDAControl.h"
 #include "BluePrintList.h"
 #include "BluePrint.h"
 #include "Result.h"
 #include "USDA_API.h"
 
+using namespace winrt;
+using namespace Windows::UI::Xaml;
 namespace winrt::NutritionBasket::implementation
 {
     struct AddItemControl : AddItemControlT<AddItemControl>
@@ -18,38 +21,24 @@ namespace winrt::NutritionBasket::implementation
         AddItemControl();
         NutritionBasket::BluePrintList LocalSearchList();
         NutritionBasket::BluePrint SelectedItem();
-        Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> USDAResults();
+        hstring SearchBarText();
+        void SearchBarText(hstring s);
+        void SetSelectedItem(NutritionBasket::BluePrint item);
+        void HideSearchResults();
+        void OpenSearchDialog();
 
-        void OpenSearchDialogHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& e);
-        void SearchBarEntryHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::TextChangedEventArgs const& e);
+        void SearchBarEntryHandler(Windows::Foundation::IInspectable const& sender, Controls::TextChangedEventArgs const& e);
+        void AmountEntryHandler(Windows::Foundation::IInspectable const& sender, Controls::TextChangedEventArgs const& e);
+        void SelectItemClickHandler(Windows::Foundation::IInspectable const& sender, RoutedEventArgs const&);
+        void AddItemClickHandler(Windows::Foundation::IInspectable const& sender, RoutedEventArgs const&);
+        void DefaultDialogClosedClickHandler(Windows::Foundation::IInspectable const& sender, Controls::ContentDialogClosedEventArgs  const&);
 
-        void SelectItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void SearchUSDAClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void SearchCoRoutine();
-        void SelectUSDAItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void USDAPrevClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void USDANextClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-
-        void AddItemClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&);
-        void CustomClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
-        void AddItemCancelClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
-
-        void DefaultDialogClosedClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogClosedEventArgs  const&);
-        void CustomDialogClosedClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogClosedEventArgs  const&);
-        void AddCustomClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
-        void AddCustomCancelClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::ContentDialogButtonClickEventArgs const&);
-
-        void HighlightValidEntry();
-        void ResetEntryBG();
-        void UpdateLocalBlueprints();
-        
+        void UpdateSearchBarUX(boolean state);
+        void UpdateLocalBlueprints(NutritionBasket::BluePrint item);
+        void RatioElems(NutritionBasket::BasketItem* Item, hstring amount);
     private:
         NutritionBasket::BluePrintList m_localSearchList;
         NutritionBasket::BluePrint m_selectedItem;
-        Windows::Foundation::Collections::IObservableVector<NutritionBasket::Result> m_USDAResults;
-        boolean m_customClick;
-        boolean m_customAdd;
-        USDA_API m_USDA_API;
     };
 }
 

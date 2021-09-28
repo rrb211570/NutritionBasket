@@ -10,10 +10,9 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::NutritionBasket::implementation
 {
-	DeleteBasketControl::DeleteBasketControl()
-	{
-		InitializeComponent();
-	}
+	DeleteBasketControl::DeleteBasketControl() { InitializeComponent(); }
+
+	void DeleteBasketControl::OpenDeleteBasketDialog() { MyDialog().ShowAsync(); }
 
 	int32_t DeleteBasketControl::MyProperty()
 	{
@@ -25,7 +24,7 @@ namespace winrt::NutritionBasket::implementation
 		throw hresult_not_implemented();
 	}
 
-	void DeleteBasketControl::DeleteColClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void DeleteBasketControl::DeleteColClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
 	{
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
 		for (int i = main->BodyList().SelectedIndex() + 1; i < main->BodyViewModel().BasketViews().Size(); ++i) {
@@ -33,9 +32,10 @@ namespace winrt::NutritionBasket::implementation
 			it.BasketIndex(it.BasketIndex() - 1);
 		}
 		main->BodyViewModel().BasketViews().RemoveAt(main->BodyList().SelectedIndex());
+		Storage::SaveLayout();
 	}
 
-	void DeleteBasketControl::DeleteColCancelClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void DeleteBasketControl::DeleteColCancelClickHandler(IInspectable const&, Controls::ContentDialogButtonClickEventArgs const&)
 	{
 		MainPage* main = get_self<MainPage>(Window::Current().Content().try_as<Controls::Frame>().Content().try_as<NutritionBasket::MainPage>());
 		main->ClosePopUps();

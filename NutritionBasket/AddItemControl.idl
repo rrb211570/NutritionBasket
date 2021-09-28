@@ -2,14 +2,21 @@
 import "BluePrintList.idl";
 import "BluePrint.idl";
 import "Result.idl";
+import "BasketItem.idl";
 
 namespace NutritionBasket
 {
     runtimeclass AddItemControl : Windows.UI.Xaml.Controls.UserControl
     {
         AddItemControl();
+        void OpenSearchDialog();
+        void HideSearchResults();
+        String SearchBarText();
         BluePrintList LocalSearchList{ get; };
         BluePrint SelectedItem{ get; };
-        Windows.Foundation.Collections.IObservableVector<Result> USDAResults{ get; };
+        void SetSelectedItem(BluePrint item);
+        void UpdateLocalBlueprints(BluePrint item);
+        void UpdateSearchBarUX(Boolean state);
+        void SearchBarText(String s);
     }
 }

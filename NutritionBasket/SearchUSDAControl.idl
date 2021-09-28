@@ -1,0 +1,12 @@
+// SearchUSDAControl.idl
+import "Result.idl";
+
+namespace NutritionBasket
+{
+    runtimeclass SearchUSDAControl : Windows.UI.Xaml.Controls.UserControl
+    {
+        SearchUSDAControl();
+        Windows.Foundation.Collections.IObservableVector<Result> USDAResults{ get; };
+        void ResetVisibilities();
+    }
+}
