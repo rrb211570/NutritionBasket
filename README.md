@@ -8,4 +8,4 @@ Current Features:
 - Searchbar for "smart entry": from local storage, or from HTTPS requests to USDA's database
 - TO-DO: Excel-style UX
 
-Video Demo of current features (pre-HTTPS): https://drive.google.com/file/d/1rBQLGbev7DptVwwVHywZL6JgP0DrVwa2/view
+Video Demo of current features (pre-HTTPS): https://drive.google.com/file/d/1eKx-XBHwMgbxwWjeXsa8kAH7bbvipTyd/view
