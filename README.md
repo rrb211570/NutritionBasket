@@ -4,7 +4,7 @@ Windows Desktop App to help calculate daily nutrition based off of grocery list(
 Current Features: 
 - Create/Delete baskets
 - Add/Remove items in basket
-- Searchbar for "smart entry": from local storage, or from HTTPS requests to USDA's database
+- Searchbar for "smart entry": from local storage, or from HTTPS requests to USDA's FoodData Central API
 - List of ingredients in local storage
 - Persistent storage of local ingredients and app layout
 
