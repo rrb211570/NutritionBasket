@@ -7,6 +7,5 @@ Current Features:
 - Searchbar for "smart entry": from local storage, or from HTTPS requests to USDA's database
 - List of ingredients in local storage
 - Persistent storage of local ingredients and app layout
-- TO-DO: Excel-style UX
 
-Video Demo of current features: https://drive.google.com/file/d/1eKx-XBHwMgbxwWjeXsa8kAH7bbvipTyd/view
+See demo on my [portfolio](https://portfolio-6cfe3.firebaseapp.com)
