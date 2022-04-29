@@ -8,4 +8,4 @@ Current Features:
 - List of ingredients in local storage
 - Persistent storage of local ingredients and app layout
 
-See demo on my [portfolio](https://portfolio-6cfe3.firebaseapp.com)
+See demo on my [portfolio](https://portfolio-6cfe3.firebaseapp.com).
